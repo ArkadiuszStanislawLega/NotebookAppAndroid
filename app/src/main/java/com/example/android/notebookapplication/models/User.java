@@ -1,6 +1,7 @@
 package com.example.android.notebookapplication.models;
 
 public class User {
+    private int id;
     private String userName;
     private String email;
     private String password;
@@ -54,6 +55,14 @@ public class User {
 
     public void setActive(Boolean active) {
         isActive = active;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
 }
