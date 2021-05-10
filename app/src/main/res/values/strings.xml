@@ -11,4 +11,5 @@
     <string name="login__validation_login_empty">Proszę podać login.</string>
     <string name="login__success">Logowanie powiodło się.</string>
     <string name="login__failure">Logowanie nie powiodło się. Prosimy spróbować ponownie.</string>
+    <string name="logged_in__logout">Wyloguj</string>
 </resources>

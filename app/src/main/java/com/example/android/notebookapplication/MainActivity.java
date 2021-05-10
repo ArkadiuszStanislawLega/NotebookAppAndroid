@@ -7,13 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
 
