@@ -1,5 +1,6 @@
 package com.example.android.notebookapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
@@ -71,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
                             getString(R.string.login__success),
                             Toast.LENGTH_SHORT)
                             .show();
+                    Intent intent = new Intent(this, LoggedInActivity.class);
+                    startActivity(intent);
+                    finish();
                     return;
                 }
                 Toast.makeText(this,
