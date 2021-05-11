@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.notebookapplication.dummy.DummyContent.DummyItem;
 import com.example.android.notebookapplication.models.JobsList;
@@ -34,7 +35,6 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
                 .inflate(R.layout.job_item, parent, false);
         return new ViewHolder(view);
     }
-
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         String DATE_FORMAT = "dd.MM.yyyy";
@@ -50,7 +50,16 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
 
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
+        JobsList jl = (JobsList)mValues.get(position);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(), "Hello Javatpoint" + position,Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {

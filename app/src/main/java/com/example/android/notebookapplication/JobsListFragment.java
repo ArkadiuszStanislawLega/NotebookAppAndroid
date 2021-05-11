@@ -11,12 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.example.android.notebookapplication.dummy.DummyContent;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +54,7 @@ public class JobsListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
         this.SetDummyData();
 
     }
@@ -95,16 +95,16 @@ public class JobsListFragment extends Fragment {
         this.lists.add(jl4);
         this.lists.add(jl5);
     }
-
+    View currentView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        currentView = inflater.inflate(R.layout.jobs_list_fragment, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+        if (currentView instanceof RecyclerView) {
+            Context context = currentView.getContext();
+            RecyclerView recyclerView = (RecyclerView) currentView;
             if (mColumnCount <= 1) {
                 recyclerView.setLayoutManager(new LinearLayoutManager(context));
             } else {
@@ -112,6 +112,8 @@ public class JobsListFragment extends Fragment {
             }
             recyclerView.setAdapter(new JobsListRecyclerViewAdapter(this.lists));
         }
-        return view;
+        return currentView;
     }
+
+
 }
