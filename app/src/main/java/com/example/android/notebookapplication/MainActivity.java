@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText edtLogin;
     private EditText edtPass;
     private Button btnLogin;
+    private FrameLayout mainContent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

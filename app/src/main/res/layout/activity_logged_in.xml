@@ -14,6 +14,12 @@
         android:text="Jesteś zalogowany"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+    <FrameLayout
+        android:id="@+id/main_content"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </FrameLayout>
 
     <Button
         android:id="@+id/btnLogout"
