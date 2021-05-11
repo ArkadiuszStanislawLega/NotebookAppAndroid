@@ -1,5 +1,5 @@
 package com.example.android.notebookapplication.models;
-import java.sql.Date;
+import java.util.Date;
 
 
 public class Job {

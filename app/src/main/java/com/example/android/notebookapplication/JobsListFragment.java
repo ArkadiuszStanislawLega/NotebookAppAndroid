@@ -13,6 +13,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.android.notebookapplication.dummy.DummyContent;
+import com.example.android.notebookapplication.models.JobsList;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -31,6 +37,7 @@ public class JobsListFragment extends Fragment {
     public JobsListFragment() {
     }
 
+    private List<JobsList> lists = new ArrayList<>();
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static JobsListFragment newInstance(int columnCount) {
@@ -48,6 +55,45 @@ public class JobsListFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+        this.SetDummyData();
+
+    }
+    private void SetDummyData(){
+        JobsList jl1 = new JobsList();
+        jl1.setId(1);
+        jl1.setName("Pierwsza");
+        jl1.setCreated(new Date());
+        jl1.setEdited(new Date());
+
+        JobsList jl2 = new JobsList();
+        jl2.setId(2);
+        jl2.setName("Druga");
+        jl2.setCreated(new Date());
+        jl2.setEdited(new Date());
+
+        JobsList jl3 = new JobsList();
+        jl3.setId(3);
+        jl3.setName("Trzecia");
+        jl3.setCreated(new Date());
+        jl3.setEdited(new Date());
+
+        JobsList jl4 = new JobsList();
+        jl4.setId(4);
+        jl4.setName("Czwarta");
+        jl4.setCreated(new Date());
+        jl4.setEdited(new Date());
+
+        JobsList jl5 = new JobsList();
+        jl5.setId(5);
+        jl5.setName("Piąta");
+        jl5.setCreated(new Date());
+        jl5.setEdited(new Date());
+
+        this.lists.add(jl1);
+        this.lists.add(jl2);
+        this.lists.add(jl3);
+        this.lists.add(jl4);
+        this.lists.add(jl5);
     }
 
     @Override
@@ -64,7 +110,7 @@ public class JobsListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new JobsListRecyclerViewAdapter(DummyContent.ITEMS));
+            recyclerView.setAdapter(new JobsListRecyclerViewAdapter(this.lists));
         }
         return view;
     }

@@ -1,6 +1,13 @@
 package com.example.android.notebookapplication.models;
 
-import java.sql.Date;
+import com.example.android.notebookapplication.dummy.DummyContent;
+
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 public class JobsList {
     private int id;
@@ -48,4 +55,6 @@ public class JobsList {
     public void setOwner_id(int owner_id) {
         this.owner_id = owner_id;
     }
+
+
 }
