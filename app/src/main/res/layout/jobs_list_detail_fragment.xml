@@ -8,56 +8,50 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+        <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:text="@string/list_detail_name"/>
             <TextView
                 android:id="@+id/list_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_gravity="right"
                 android:text="Name"/>
-        </LinearLayout>
-        <LinearLayout
+        </GridLayout>
+        <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:text="@string/list_detail_create_date"/>
             <TextView
                 android:id="@+id/list_created_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_gravity="right"
                 android:text="Created date"/>
-        </LinearLayout>
-        <LinearLayout
+        </GridLayout>
+        <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
                 android:text="@string/list_detail_edit_date"/>
             <TextView
                 android:id="@+id/list_edited_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_gravity="right"
                 android:text="Edited Date"/>
-        </LinearLayout>
+        </GridLayout>
     </LinearLayout>
 </FrameLayout>
