@@ -14,4 +14,8 @@
     <string name="login__success">Logowanie powiodło się.</string>
     <string name="login__failure">Logowanie nie powiodło się. Prosimy spróbować ponownie.</string>
     <string name="logged_in__logout">Wyloguj</string>
+    <string name="list_detail_name">Nazwa:</string>
+    <string name="list_detail_create_date">Data utworzenia:</string>
+    <string name="list_detail_edit_date">Date edycji:</string>
+
 </resources>

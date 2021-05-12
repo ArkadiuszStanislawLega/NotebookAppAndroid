@@ -42,13 +42,14 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
                 .inflate(R.layout.job_item, parent, false);
         return new ViewHolder(view);
     }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         String DATE_FORMAT = "dd.MM.yyyy";
         String TIME_FORMAT = "HH:mm:ss";
         DateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
         holder.mItem = mValues.get(position);
-        holder.tvId.setText(""+mValues.get(position).getId());
+        holder.tvId.setText("" + mValues.get(position).getId());
         holder.tvName.setText(mValues.get(position).getName());
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
@@ -57,37 +58,21 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
 
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
-        JobsList jl = (JobsList)mValues.get(position);
+        JobsList jl = (JobsList) mValues.get(position);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
-//                _fragmentManager = getSupportFragmentManager();
-//                _fragmentTransaction = _fragmentManager.beginTransaction();
-//                _fragmentTransaction.add(R.id.main_content, instance).commit();
-                Toast.makeText(view.getContext(), "Hello Javatpoint" + position,Toast.LENGTH_SHORT).show();
-                JobsListDetailFragment mFragment = new JobsListDetailFragment();
-//                Bundle mBundle = new Bundle();
-//                mBundle.putParcelable("item_selected_key", jl);
-//                mFragment.setArguments(mBundle);
-
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
                     LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
                     mainActivity.changeContent(AppFragment.JobsListDetail, mValues.get(position));
-
-//                    Fragment frag = mFragment;
-//
-//                    mainActivity.switchContent(id, frag);
                 }
-
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

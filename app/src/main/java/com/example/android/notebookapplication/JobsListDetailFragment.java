@@ -15,9 +15,14 @@ import android.widget.TextView;
 
 import com.example.android.notebookapplication.models.JobsList;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 public class JobsListDetailFragment extends Fragment {
 
-    private TextView tvListId;
+    private TextView tvListName;
+    private TextView tvListEditedDate;
+    private TextView tvListCreatedDate;
     private JobsListDetailViewModel mViewModel;
     private JobsList jobsList;
     private View currentView;
@@ -32,8 +37,20 @@ public class JobsListDetailFragment extends Fragment {
         this.currentView = inflater.inflate(R.layout.jobs_list_detail_fragment, container, false);
         try {
             jobsList = (JobsList) getArguments().getSerializable("list");
-            this.tvListId = this.currentView.findViewById(R.id.list_id);
-            this.tvListId.setText(""+this.jobsList.getId());
+            this.tvListName = this.currentView.findViewById(R.id.list_name);
+            this.tvListCreatedDate = this.currentView.findViewById(R.id.list_created_date);
+            this.tvListEditedDate = this.currentView.findViewById(R.id.list_edited_date);
+
+            String DATE_FORMAT = getString(R.string.date_format) ;
+            String TIME_FORMAT = getString(R.string.time_format);
+
+            SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT+ " " + TIME_FORMAT);
+            String edited = formatter.format(jobsList.getEdited());
+            String created = formatter.format(jobsList.getCreated());
+
+            this.tvListName.setText(""+this.jobsList.getName());
+            this.tvListEditedDate.setText(edited);
+            this.tvListCreatedDate.setText(created);
 
         }catch (NullPointerException e){
             System.out.println(e);
