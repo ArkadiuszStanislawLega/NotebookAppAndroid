@@ -60,12 +60,14 @@ public class LoggedInActivity extends AppCompatActivity {
             }
 
             this._fragmentTransaction = this._fragmentManager.beginTransaction();
-            if (currentFragment == null)
-                this._fragmentTransaction.add(R.id.main_content, instance).commit();
+            if (this.currentFragment == null)
+                this._fragmentTransaction.add(R.id.main_content, instance);
             else
-                this._fragmentTransaction.replace(R.id.main_content, instance).commit();
+                this._fragmentTransaction.replace(R.id.main_content, instance);
 
-            currentFragment = appFragment;
+            this.currentFragment = appFragment;
+            this._fragmentTransaction.addToBackStack(null);
+            this._fragmentTransaction.commit();
         }
     }
 
