@@ -20,6 +20,7 @@ public class LoggedInActivity extends AppCompatActivity {
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
+    private AppFragment currentFragment;
 
     public static final HashMap<AppFragment, Fragment> APPLICATIONS_FRAGMENTS = new HashMap<AppFragment, Fragment>()
     {
@@ -51,10 +52,12 @@ public class LoggedInActivity extends AppCompatActivity {
     public void changeContent(AppFragment appFragment){
         Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
         if(instance != null)
-            this._fragmentTransaction = this._fragmentManager.beginTransaction();
-            //TODO: this._fragmentTransaction.remove() <--- to poprawić
+            if (currentFragment != null)
+                this._fragmentTransaction.remove(this.APPLICATIONS_FRAGMENTS.get((currentFragment)));
 
+            this._fragmentTransaction = this._fragmentManager.beginTransaction();
             this._fragmentTransaction.add(R.id.main_content, instance).commit();
+            currentFragment = appFragment;
     }
 
     private void initControls(){
