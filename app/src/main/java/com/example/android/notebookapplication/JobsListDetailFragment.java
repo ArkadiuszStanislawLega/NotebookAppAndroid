@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.notebookapplication.models.JobsList;
+
 public class JobsListDetailFragment extends Fragment {
 
     private JobsListDetailViewModel mViewModel;

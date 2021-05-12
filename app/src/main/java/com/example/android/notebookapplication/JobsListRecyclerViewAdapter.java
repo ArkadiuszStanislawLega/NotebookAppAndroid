@@ -1,13 +1,18 @@
 package com.example.android.notebookapplication;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.dummy.DummyContent.DummyItem;
 import com.example.android.notebookapplication.models.JobsList;
 
@@ -24,6 +29,8 @@ import java.util.List;
 public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRecyclerViewAdapter.ViewHolder> {
 
     private final List<JobsList> mValues;
+    private FragmentTransaction _fragmentTransaction;
+    private FragmentManager _fragmentManager;
 
     public JobsListRecyclerViewAdapter(List<JobsList> items) {
         mValues = items;
@@ -52,10 +59,31 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
         holder.tvCreated.setText(created);
         JobsList jl = (JobsList)mValues.get(position);
 
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
+//                _fragmentManager = getSupportFragmentManager();
+//                _fragmentTransaction = _fragmentManager.beginTransaction();
+//                _fragmentTransaction.add(R.id.main_content, instance).commit();
                 Toast.makeText(view.getContext(), "Hello Javatpoint" + position,Toast.LENGTH_SHORT).show();
+                JobsListDetailFragment mFragment = new JobsListDetailFragment();
+//                Bundle mBundle = new Bundle();
+//                mBundle.putParcelable("item_selected_key", jl);
+//                mFragment.setArguments(mBundle);
+
+                if (view.getContext() == null)
+                    return;
+                if (view.getContext() instanceof LoggedInActivity) {
+                    LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
+                    mainActivity.changeContent(AppFragment.JobsListDetail);
+
+//                    Fragment frag = mFragment;
+//
+//                    mainActivity.switchContent(id, frag);
+                }
+
             }
         });
     }

@@ -48,10 +48,12 @@ public class LoggedInActivity extends AppCompatActivity {
         this.changeContent(AppFragment.JobsList);
     }
 
-    private void changeContent(AppFragment appFragment){
+    public void changeContent(AppFragment appFragment){
         Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
         if(instance != null)
             this._fragmentTransaction = this._fragmentManager.beginTransaction();
+            //TODO: this._fragmentTransaction.remove() <--- to poprawić
+
             this._fragmentTransaction.add(R.id.main_content, instance).commit();
     }
 
