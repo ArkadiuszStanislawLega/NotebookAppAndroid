@@ -77,7 +77,7 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
                     LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
-                    mainActivity.changeContent(AppFragment.JobsListDetail);
+                    mainActivity.changeContent(AppFragment.JobsListDetail, mValues.get(position));
 
 //                    Fragment frag = mFragment;
 //

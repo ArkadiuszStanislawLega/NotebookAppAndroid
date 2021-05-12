@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.android.notebookapplication.Enumerators.AppFragment;
+import com.example.android.notebookapplication.models.JobsList;
 
 import java.util.HashMap;
 
@@ -46,18 +47,26 @@ public class LoggedInActivity extends AppCompatActivity {
             });
         }
 
-        this.changeContent(AppFragment.JobsList);
+        this.changeContent(AppFragment.JobsList, null);
     }
 
-    public void changeContent(AppFragment appFragment){
+    public void changeContent(AppFragment appFragment, Object obj){
         Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
-        if(instance != null)
-            if (currentFragment != null)
-                this._fragmentTransaction.remove(this.APPLICATIONS_FRAGMENTS.get((currentFragment)));
+        if(instance != null) {
+            if (appFragment == AppFragment.JobsListDetail) {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (JobsList) obj);
+                instance.setArguments(bundle);
+            }
 
             this._fragmentTransaction = this._fragmentManager.beginTransaction();
-            this._fragmentTransaction.add(R.id.main_content, instance).commit();
+            if (currentFragment == null)
+                this._fragmentTransaction.add(R.id.main_content, instance).commit();
+            else
+                this._fragmentTransaction.replace(R.id.main_content, instance).commit();
+
             currentFragment = appFragment;
+        }
     }
 
     private void initControls(){

@@ -11,12 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.android.notebookapplication.models.JobsList;
 
 public class JobsListDetailFragment extends Fragment {
 
+    private TextView tvListId;
     private JobsListDetailViewModel mViewModel;
+    private JobsList jobsList;
+    private View currentView;
 
     public static JobsListDetailFragment newInstance() {
         return new JobsListDetailFragment();
@@ -25,7 +29,18 @@ public class JobsListDetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.jobs_list_detail_fragment, container, false);
+        this.currentView = inflater.inflate(R.layout.jobs_list_detail_fragment, container, false);
+        try {
+            jobsList = (JobsList) getArguments().getSerializable("list");
+            this.tvListId = this.currentView.findViewById(R.id.list_id);
+            this.tvListId.setText(""+this.jobsList.getId());
+
+        }catch (NullPointerException e){
+            System.out.println(e);
+        }
+
+        return currentView;
+
     }
 
     @Override
