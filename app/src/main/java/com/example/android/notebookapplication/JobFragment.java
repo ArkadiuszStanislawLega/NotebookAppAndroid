@@ -45,6 +45,7 @@ public class JobFragment extends Fragment {
         j1.setTitle("Pierwszy tytuł");
         j1.setCreated(new Date());
         j1.setEdited(new Date());
+        j1.setFinished(true);
         j2.setId(2);
         j2.setContent("Drugi kontent");
         j2.setTitle("Drugi tytuł");

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.notebookapplication.models.Job;
@@ -42,6 +43,10 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
         holder.tvTitle.setText(this._jobs.get(position).getTitle());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
+        if (this._jobs.get(position).isFinished())
+            holder.ivIsFinished.setVisibility(View.VISIBLE);
+        else
+            holder.ivIsFinished.setVisibility(View.GONE);
     }
 
     @Override
@@ -57,6 +62,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
         public final TextView tvTitle;
         public final TextView tvEdited;
         public final TextView tvCreated;
+        public final ImageView ivIsFinished;
         public Job item;
 
         public ViewHolder(View view) {
@@ -65,6 +71,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
             tvTitle = (TextView) view.findViewById(R.id.job_title);
             tvEdited = (TextView) view.findViewById(R.id.job_edited);
             tvCreated = (TextView) view.findViewById(R.id.job_created);
+            ivIsFinished = (ImageView) view.findViewById(R.id.is_checked);
         }
 
         @Override
