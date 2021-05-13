@@ -1,24 +1,18 @@
 package com.example.android.notebookapplication;
 
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.dummy.DummyContent.DummyItem;
 import com.example.android.notebookapplication.models.JobsList;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -28,18 +22,17 @@ import java.util.List;
  */
 public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRecyclerViewAdapter.ViewHolder> {
 
-    private final List<JobsList> mValues;
-    private FragmentTransaction _fragmentTransaction;
-    private FragmentManager _fragmentManager;
+    private final List<JobsList> _lists;
 
     public JobsListRecyclerViewAdapter(List<JobsList> items) {
-        mValues = items;
+        this._lists = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.job_item, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -47,19 +40,15 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         String DATE_FORMAT = "dd.MM.yyyy";
         String TIME_FORMAT = "HH:mm:ss";
-        DateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
-        holder.mItem = mValues.get(position);
-        holder.tvId.setText("" + mValues.get(position).getId());
-        holder.tvName.setText(mValues.get(position).getName());
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+        String edited = formatter.format(this._lists.get(position).getEdited());
+        String created = formatter.format(this._lists.get(position).getCreated());
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        String edited = formatter.format(mValues.get(position).getEdited());
-        String created = formatter.format(mValues.get(position).getCreated());
-
+        holder.item = this._lists.get(position);
+        holder.tvId.setText("" + this._lists.get(position).getId());
+        holder.tvName.setText(this._lists.get(position).getName());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
-        JobsList jl = (JobsList) mValues.get(position);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +57,7 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
                     LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
-                    mainActivity.changeContent(AppFragment.JobsListDetail, mValues.get(position));
+                    mainActivity.changeContent(AppFragment.JobsListDetail, _lists.get(position));
                 }
             }
         });
@@ -76,7 +65,7 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return _lists.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -85,7 +74,7 @@ public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRe
         public final TextView tvName;
         public final TextView tvEdited;
         public final TextView tvCreated;
-        public JobsList mItem;
+        public JobsList item;
 
         public ViewHolder(View view) {
             super(view);
