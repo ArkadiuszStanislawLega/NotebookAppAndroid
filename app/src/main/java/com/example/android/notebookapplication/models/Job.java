@@ -8,6 +8,7 @@ public class Job {
     private Date edited;
     private String title;
     private String Content;
+    private boolean isFinished;
     private int parent_id;
 
     public int getId() {
@@ -58,4 +59,11 @@ public class Job {
         this.parent_id = parent_id;
     }
 
+    public boolean isFinished() {
+        return isFinished;
+    }
+
+    public void setFinished(boolean finished) {
+        isFinished = finished;
+    }
 }
