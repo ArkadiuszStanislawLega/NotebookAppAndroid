@@ -3,9 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
+    android:background="@color/back"
     android:orientation="vertical">
     <TextView
         android:id="@+id/job_title"
+        android:textSize="@dimen/list_item_normal"
+        android:textColor="@color/active"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -19,12 +22,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:textSize="@dimen/list_item_small"
+            android:textColor="@color/inactive"
             android:text="Utworzono:" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:textSize="@dimen/list_item_small"
+            android:textColor="@color/inactive"
             android:text="Edytowano:" />
     </GridLayout>
 
@@ -38,6 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
+            android:textSize="@dimen/list_item_small"
+            android:textColor="@color/inactive"
             android:text="Created" />
 
         <TextView
@@ -45,6 +54,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="right"
+            android:textSize="@dimen/list_item_small"
+            android:textColor="@color/inactive"
             android:text="Edited" />
     </GridLayout>
 </LinearLayout>
