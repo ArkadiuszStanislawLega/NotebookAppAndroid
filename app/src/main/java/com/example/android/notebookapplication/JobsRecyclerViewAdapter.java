@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.android.notebookapplication.models.Job;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,7 +18,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
     private final List<Job> _jobs;
 
     public JobsRecyclerViewAdapter(List<Job> items) {
-        _jobs = items;
+        this._jobs = items;
     }
 
 
@@ -41,7 +40,6 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
 
         holder.item = this._jobs.get(position);
         holder.tvTitle.setText(this._jobs.get(position).getTitle());
-        holder.tvContent.setText(this._jobs.get(position).getContent());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
     }
@@ -57,7 +55,6 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View currentView;
         public final TextView tvTitle;
-        public final TextView tvContent;
         public final TextView tvEdited;
         public final TextView tvCreated;
         public Job item;
@@ -65,10 +62,9 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
         public ViewHolder(View view) {
             super(view);
             currentView = view;
-            tvTitle = (TextView) view.findViewById(R.id.jobs_list_id);
-            tvContent = (TextView) view.findViewById(R.id.jobs_list_name);
-            tvEdited = (TextView) view.findViewById(R.id.jobs_list_edited);
-            tvCreated = (TextView) view.findViewById(R.id.jobs_list_created);
+            tvTitle = (TextView) view.findViewById(R.id.job_title);
+            tvEdited = (TextView) view.findViewById(R.id.job_edited);
+            tvCreated = (TextView) view.findViewById(R.id.job_created);
         }
 
         @Override

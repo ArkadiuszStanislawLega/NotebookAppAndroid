@@ -43,7 +43,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         String created = formatter.format(this._lists.get(position).getCreated());
 
         holder.item = this._lists.get(position);
-        holder.tvId.setText("" + this._lists.get(position).getId());
         holder.tvName.setText(this._lists.get(position).getName());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
@@ -68,7 +67,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View currentView;
-        public final TextView tvId;
         public final TextView tvName;
         public final TextView tvEdited;
         public final TextView tvCreated;
@@ -77,7 +75,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         public ViewHolder(View view) {
             super(view);
             currentView = view;
-            tvId = (TextView) view.findViewById(R.id.jobs_list_id);
             tvName = (TextView) view.findViewById(R.id.jobs_list_name);
             tvEdited = (TextView) view.findViewById(R.id.jobs_list_edited);
             tvCreated = (TextView) view.findViewById(R.id.jobs_list_created);

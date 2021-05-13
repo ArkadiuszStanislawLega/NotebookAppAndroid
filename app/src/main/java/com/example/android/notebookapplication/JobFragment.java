@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import com.example.android.notebookapplication.models.Job;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,15 +30,35 @@ public class JobFragment extends Fragment {
 
     private List<Job> _jobs;
 
-    public void set_jobs(List<Job> _jobs) {
-        this._jobs = _jobs;
-    }
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public JobFragment() {
+        this._jobs = new ArrayList<>();
+        Job j1 = new Job();
+        Job j2 = new Job();
+        Job j3 = new Job();
+
+        j1.setId(1);
+        j1.setContent("Pierwszy kontent");
+        j1.setTitle("Pierwszy tytuł");
+        j1.setCreated(new Date());
+        j1.setEdited(new Date());
+        j2.setId(2);
+        j2.setContent("Drugi kontent");
+        j2.setTitle("Drugi tytuł");
+        j2.setCreated(new Date());
+        j2.setEdited(new Date());
+        j3.setId(3);
+        j3.setContent("Trzeci kontent");
+        j3.setTitle("Trzeci tytuł");
+        j3.setCreated(new Date());
+        j3.setEdited(new Date());
+
+        this._jobs.add(j1);
+        this._jobs.add(j2);
+        this._jobs.add(j3);
     }
 
     // TODO: Customize parameter initialization
@@ -52,7 +74,6 @@ public class JobFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
