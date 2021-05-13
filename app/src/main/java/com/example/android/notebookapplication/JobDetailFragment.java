@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 public class JobDetailFragment extends Fragment {
 
-    private JobViewModel mViewModel;
 
     public static JobDetailFragment newInstance() {
         return new JobDetailFragment();
@@ -29,7 +28,7 @@ public class JobDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(JobViewModel.class);
+//        mViewModel = new ViewModelProvider(this).get(JobViewModel.class);
         // TODO: Use the ViewModel
     }
 

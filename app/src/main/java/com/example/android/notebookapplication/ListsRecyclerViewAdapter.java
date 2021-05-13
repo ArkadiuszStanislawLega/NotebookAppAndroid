@@ -1,7 +1,5 @@
 package com.example.android.notebookapplication;
 
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -20,18 +18,18 @@ import java.util.List;
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class JobsListRecyclerViewAdapter extends RecyclerView.Adapter<JobsListRecyclerViewAdapter.ViewHolder> {
+public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
 
     private final List<JobsList> _lists;
 
-    public JobsListRecyclerViewAdapter(List<JobsList> items) {
+    public ListsRecyclerViewAdapter(List<JobsList> items) {
         this._lists = items;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.job_item, parent, false);
+                .inflate(R.layout.lists_item, parent, false);
 
         return new ViewHolder(view);
     }

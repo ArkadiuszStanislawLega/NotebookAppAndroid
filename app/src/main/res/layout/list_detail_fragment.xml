@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".JobsListDetailFragment">
+    tools:context=".ListDetailFragment">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -53,5 +53,11 @@
                 android:layout_gravity="right"
                 android:text="Edited Date"/>
         </GridLayout>
+            <fragment
+                android:name="com.example.android.notebookapplication.JobFragment"
+                android:id="@+id/jobs_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
     </LinearLayout>
+
 </FrameLayout>

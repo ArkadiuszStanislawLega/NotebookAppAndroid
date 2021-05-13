@@ -15,7 +15,16 @@ public class JobsList implements Serializable {
     private String name;
     private Date created;
     private Date edited;
+    private List<Job> jobsList;
     private int owner_id;
+
+    public List<Job> getJobsList() {
+        return jobsList;
+    }
+
+    public void setJobsList(List<Job> jobsList) {
+        this.jobsList = jobsList;
+    }
 
     public int getId() {
         return id;

@@ -25,9 +25,9 @@ public class LoggedInActivity extends AppCompatActivity {
 
     public static final HashMap<AppFragment, Fragment> APPLICATIONS_FRAGMENTS = new HashMap<AppFragment, Fragment>()
     {
-        {put(AppFragment.JobsList, new JobsListFragment());}
+        {put(AppFragment.JobsList, new ListFragment());}
         {put(AppFragment.JobDetail, new JobDetailFragment());}
-        {put(AppFragment.JobsListDetail, new JobsListDetailFragment());}
+        {put(AppFragment.JobsListDetail, new ListDetailFragment());}
     };
 
     @Override
