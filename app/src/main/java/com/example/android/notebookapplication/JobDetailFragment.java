@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.example.android.notebookapplication.models.Job;
+import com.google.android.material.chip.Chip;
 
 import java.text.SimpleDateFormat;
 
@@ -49,6 +52,7 @@ public class JobDetailFragment extends Fragment {
             this._tvCreated = this._currentView.findViewById(R.id.job_created_date);
             this._tvEdited = this._currentView.findViewById(R.id.job_edited_date);
             this._sIsFinished = this._currentView.findViewById(R.id.job_is_finished);
+
             this._tvTitle.setText(this._job.getTitle());
             this._tvContent.setText(this._job.getContent());
             this._tvCreated.setText(created);

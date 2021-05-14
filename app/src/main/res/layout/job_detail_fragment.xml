@@ -30,12 +30,12 @@
         </FrameLayout>
 
         <Switch
-            android:padding="5dp"
             android:id="@+id/job_is_finished"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/job_detail_is_finished"
             android:textColor="@color/active"
-            android:text="@string/job_detail_is_finished"/>
+            android:padding="5dp"/>
         <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

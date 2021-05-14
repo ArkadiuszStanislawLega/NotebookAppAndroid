@@ -24,13 +24,6 @@ public class LoggedInActivity extends AppCompatActivity {
     private FragmentManager _fragmentManager;
     private AppFragment currentFragment;
 
-    public static final HashMap<AppFragment, Fragment> APPLICATIONS_FRAGMENTS = new HashMap<AppFragment, Fragment>()
-    {
-        {put(AppFragment.JobsList, new ListFragment());}
-        {put(AppFragment.JobDetail, new JobDetailFragment());}
-        {put(AppFragment.JobsListDetail, new ListDetailFragment());}
-    };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,28 +44,45 @@ public class LoggedInActivity extends AppCompatActivity {
         this.changeContent(AppFragment.JobsList, null);
     }
 
-    public void changeContent(AppFragment appFragment, Object obj){
-        Fragment instance = this.APPLICATIONS_FRAGMENTS.get((appFragment));
-        if(instance != null) {
-            if (appFragment == AppFragment.JobsListDetail) {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("list", (JobsList) obj);
-                instance.setArguments(bundle);
-            }
+    private Fragment selectFragment(AppFragment appFragment){
+        switch(appFragment)
+        {
+            case JobsList:
+                return new ListFragment();
+            case JobDetail:
+                return new JobDetailFragment();
+            case JobsListDetail:
+                return new ListDetailFragment();
+            default:
+                return null;
+        }
+    }
 
-            if (appFragment == AppFragment.JobDetail){
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("job", (Job)obj);
-                instance.setArguments(bundle);
-            }
+    private Bundle dataForFragment(AppFragment appFragment, Object obj){
+        Bundle bundle = new Bundle();
+        if (appFragment == AppFragment.JobsListDetail)
+            bundle.putSerializable("list", (JobsList) obj);
+
+        if (appFragment == AppFragment.JobDetail)
+            bundle.putSerializable("job", (Job)obj);
+
+        return bundle;
+    }
+
+    public void changeContent(AppFragment appFragment, Object obj){
+        Fragment instance = this.selectFragment(appFragment);
+        if(instance != null) {
+            instance.setArguments(this.dataForFragment(appFragment, obj));
 
             this._fragmentTransaction = this._fragmentManager.beginTransaction();
+
             if (this.currentFragment == null)
                 this._fragmentTransaction.add(R.id.main_content, instance);
             else
                 this._fragmentTransaction.replace(R.id.main_content, instance);
 
             this.currentFragment = appFragment;
+
             this._fragmentTransaction.addToBackStack(null);
             this._fragmentTransaction.commit();
         }
