@@ -1,8 +1,9 @@
 package com.example.android.notebookapplication.models;
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class Job {
+public class Job implements Serializable {
     private int id;
     private Date created;
     private Date edited;

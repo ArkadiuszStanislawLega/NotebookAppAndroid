@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import com.example.android.notebookapplication.Enumerators.AppFragment;
+import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.util.HashMap;
@@ -56,6 +57,12 @@ public class LoggedInActivity extends AppCompatActivity {
             if (appFragment == AppFragment.JobsListDetail) {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("list", (JobsList) obj);
+                instance.setArguments(bundle);
+            }
+
+            if (appFragment == AppFragment.JobDetail){
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("job", (Job)obj);
                 instance.setArguments(bundle);
             }
 

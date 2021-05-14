@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
 
 import java.text.SimpleDateFormat;
@@ -47,6 +48,18 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
             holder.ivIsFinished.setVisibility(View.VISIBLE);
         else
             holder.ivIsFinished.setVisibility(View.GONE);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view.getContext() == null)
+                    return;
+                if (view.getContext() instanceof LoggedInActivity) {
+                    LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
+                    mainActivity.changeContent(AppFragment.JobDetail, _jobs.get(position));
+                }
+            }
+        });
     }
 
     @Override
