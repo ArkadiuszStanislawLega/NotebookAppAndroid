@@ -13,11 +13,16 @@ import android.widget.TextView;
 
 import com.example.android.notebookapplication.models.Job;
 
+import java.text.SimpleDateFormat;
+
 public class JobDetailFragment extends Fragment {
 
     private Job _job;
     private View _currentView;
     private TextView _tvTitle;
+    private TextView _tvContent;
+    private TextView _tvCreated;
+    private TextView _tvEdited;
     public static JobDetailFragment newInstance() {
         return new JobDetailFragment();
     }
@@ -30,8 +35,23 @@ public class JobDetailFragment extends Fragment {
         try {
             this._job = (Job) getArguments().getSerializable("job");
 
+            String DATE_FORMAT = getString(R.string.date_format) ;
+            String TIME_FORMAT = getString(R.string.time_format);
+
+            SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT+ " " + TIME_FORMAT);
+            String edited = formatter.format(this._job.getEdited());
+            String created = formatter.format(this._job.getCreated());
+
             this._tvTitle = this._currentView.findViewById(R.id.job_title);
+            this._tvContent = this._currentView.findViewById(R.id.job_detail_content);
+            this._tvCreated = this._currentView.findViewById(R.id.job_created_date);
+            this._tvEdited = this._currentView.findViewById(R.id.job_edited_date);
+
             this._tvTitle.setText(this._job.getTitle());
+            this._tvContent.setText(this._job.getContent());
+            this._tvCreated.setText(created);
+            this._tvEdited.setText(edited);
+
 
         } catch (NullPointerException e){
             System.out.println(e);
