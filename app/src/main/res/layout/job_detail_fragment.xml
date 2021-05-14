@@ -9,22 +9,33 @@
         android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textSize="@dimen/list_item_small"
-            android:textColor="@color/inactive"
-            android:text="@string/job_detail_title"/>
-        <TextView
-            android:id="@+id/job_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="@dimen/list_item_normal"
-            android:textColor="@color/active"
-            android:text="Name"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|top"
+                android:textSize="@dimen/list_item_small"
+                android:textColor="@color/inactive"
+                android:text="@string/job_detail_title"/>
+            <TextView
+                android:id="@+id/job_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/list_item_normal"
+                android:textColor="@color/active"
+                android:text="Name"/>
+        </FrameLayout>
 
+        <Switch
+            android:padding="5dp"
+            android:id="@+id/job_is_finished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/active"
+            android:text="@string/job_detail_is_finished"/>
         <GridLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -79,6 +90,5 @@
             android:layout_gravity="center"
             android:textSize="@dimen/list_item_normal"
             android:textColor="@color/active"/>
-
     </LinearLayout>
 </FrameLayout>

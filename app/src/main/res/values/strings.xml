@@ -22,5 +22,6 @@
     <string name="job_detail_create_date">Data utworzenia:</string>
     <string name="job_detail_edit_date">Data ostatniej edycji:</string>
     <string name="job_detail_content">Treść zadania</string>
+    <string name="job_detail_is_finished">Zakończone</string>
 
 </resources>
