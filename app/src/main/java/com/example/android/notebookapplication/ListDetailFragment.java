@@ -24,6 +24,7 @@ public class ListDetailFragment extends Fragment {
     private TextView tvListCreatedDate;
     private FloatingActionButton fabAdd;
     private FloatingActionButton fabEdit;
+    private FloatingActionButton fabDelete;
     private JobsList jobsList;
 
     private View currentView;
@@ -64,6 +65,7 @@ public class ListDetailFragment extends Fragment {
         this.tvListEditedDate = this.currentView.findViewById(R.id.list_edited_date);
         this.fabAdd = this.currentView.findViewById(R.id.add_job);
         this.fabEdit = this.currentView.findViewById(R.id.edit_list);
+        this.fabDelete = this.currentView.findViewById(R.id.delete_list);
     }
 
     private void setListeners(){
@@ -78,6 +80,13 @@ public class ListDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(currentView.getContext(), "List Edited", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        this.fabDelete.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(currentView.getContext(), "List Delete", Toast.LENGTH_SHORT).show();
             }
         });
     }
