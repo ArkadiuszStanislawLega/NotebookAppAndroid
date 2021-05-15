@@ -12,10 +12,12 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.android.notebookapplication.models.Job;
 import com.google.android.material.chip.Chip;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 
@@ -28,6 +30,8 @@ public class JobDetailFragment extends Fragment {
     private TextView _tvCreated;
     private TextView _tvEdited;
     private Switch _sIsFinished;
+    private FloatingActionButton _fabEdit;
+    private FloatingActionButton _fabDelete;
 
     public static JobDetailFragment newInstance() {
         return new JobDetailFragment();
@@ -42,6 +46,7 @@ public class JobDetailFragment extends Fragment {
             this._job = (Job) getArguments().getSerializable("job");
             this.initControls();
             this.setValuesToControls();
+            this.setListeners();
 
         } catch (NullPointerException e){
             System.out.println(e);
@@ -63,6 +68,24 @@ public class JobDetailFragment extends Fragment {
         this._tvCreated = this._currentView.findViewById(R.id.job_created_date);
         this._tvEdited = this._currentView.findViewById(R.id.job_edited_date);
         this._sIsFinished = this._currentView.findViewById(R.id.job_is_finished);
+        this._fabEdit = this._currentView.findViewById(R.id.edit_job);
+        this._fabDelete = this._currentView.findViewById(R.id.delete_job);
+    }
+
+    private void setListeners(){
+        this._fabEdit.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(_currentView.getContext(), "Job Edited", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        this._fabDelete.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(_currentView.getContext(), "Job Delete", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setValuesToControls(){
