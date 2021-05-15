@@ -9,20 +9,19 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
+import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.example.android.notebookapplication.models.Job;
-import com.google.android.material.chip.Chip;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 
 public class JobDetailFragment extends Fragment {
 
+    private boolean _isEditModeOn = false;
     private Job _job;
     private View _currentView;
     private TextView _tvTitle;
@@ -32,6 +31,10 @@ public class JobDetailFragment extends Fragment {
     private Switch _sIsFinished;
     private FloatingActionButton _fabEdit;
     private FloatingActionButton _fabDelete;
+    private FloatingActionButton _fabConfirmEdit;
+    private FloatingActionButton _fabCancelEdit;
+
+    private LinearLayout _llEditButtons;
 
     public static JobDetailFragment newInstance() {
         return new JobDetailFragment();
@@ -70,6 +73,9 @@ public class JobDetailFragment extends Fragment {
         this._sIsFinished = this._currentView.findViewById(R.id.job_is_finished);
         this._fabEdit = this._currentView.findViewById(R.id.edit_job);
         this._fabDelete = this._currentView.findViewById(R.id.delete_job);
+        this._fabConfirmEdit = this._currentView.findViewById(R.id.button_confirm_edit);
+        this._fabCancelEdit = this._currentView.findViewById(R.id.button_cancel_edit);
+        this._llEditButtons = this._currentView.findViewById(R.id.edit_buttons);
     }
 
     private void setListeners(){
@@ -77,6 +83,7 @@ public class JobDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Edited", Toast.LENGTH_SHORT).show();
+                showEditMode();
             }
         });
 
@@ -84,8 +91,39 @@ public class JobDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Delete", Toast.LENGTH_SHORT).show();
+                if (_isEditModeOn)
+                    showEditMode();
             }
         });
+
+        this._fabConfirmEdit.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(_currentView.getContext(), "Job Confirm Edit", Toast.LENGTH_SHORT).show();
+                showEditMode();
+            }
+        });
+
+        this._fabCancelEdit.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(_currentView.getContext(), "Job Cancel Edit", Toast.LENGTH_SHORT).show();
+                showEditMode();
+            }
+        });
+    }
+
+    private void showEditMode(){
+        if (!_isEditModeOn){
+            this._llEditButtons.setVisibility(View.VISIBLE);
+            this._fabEdit.setVisibility(View.GONE);
+            this._isEditModeOn = true;
+        }
+        else{
+            this._llEditButtons.setVisibility(View.GONE);
+            this._fabEdit.setVisibility(View.VISIBLE);
+            this._isEditModeOn = false;
+        }
     }
 
     private void setValuesToControls(){
