@@ -11,4 +11,6 @@
     <color name="active">#a1a1a1</color>
     <color name="back">#2b2b2b</color>
     <color name="colorPrimary">#FFBB86FC</color>
+    <color name="normal_floating_buttons">#488011</color>
+    <color name="edited_floating_buttons">#80114E</color>
 </resources>
