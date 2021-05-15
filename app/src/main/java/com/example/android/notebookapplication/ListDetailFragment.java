@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.notebookapplication.models.JobsList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 
@@ -20,6 +22,8 @@ public class ListDetailFragment extends Fragment {
     private TextView tvListName;
     private TextView tvListEditedDate;
     private TextView tvListCreatedDate;
+    private FloatingActionButton fabAdd;
+    private FloatingActionButton fabEdit;
     private JobsList jobsList;
 
     private View currentView;
@@ -37,6 +41,7 @@ public class ListDetailFragment extends Fragment {
             jobsList = (JobsList) getArguments().getSerializable("list");
             this.initControls();
             this.setValuesToControls();
+            this.setListeners();
 
         }catch (NullPointerException e){
             System.out.println(e);
@@ -57,6 +62,24 @@ public class ListDetailFragment extends Fragment {
         this.tvListName = this.currentView.findViewById(R.id.list_name);
         this.tvListCreatedDate = this.currentView.findViewById(R.id.list_created_date);
         this.tvListEditedDate = this.currentView.findViewById(R.id.list_edited_date);
+        this.fabAdd = this.currentView.findViewById(R.id.add_job);
+        this.fabEdit = this.currentView.findViewById(R.id.edit_list);
+    }
+
+    private void setListeners(){
+        this.fabAdd.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(currentView.getContext(), "Job Added", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        this.fabEdit.setOnClickListener(    new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(currentView.getContext(), "List Edited", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void setValuesToControls(){
