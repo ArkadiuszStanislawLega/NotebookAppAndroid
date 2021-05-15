@@ -25,6 +25,11 @@
             android:textSize="@dimen/list_item_normal"
             android:textColor="@color/active"
             android:text="Name"/>
+        <EditText
+            android:visibility="gone"
+            android:id="@+id/et_list_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <GridLayout
             android:orientation="horizontal"
