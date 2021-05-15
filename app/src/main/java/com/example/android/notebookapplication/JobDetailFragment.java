@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -24,15 +25,17 @@ public class JobDetailFragment extends Fragment {
     private boolean _isEditModeOn = false;
     private Job _job;
     private View _currentView;
-    private TextView _tvTitle;
-    private TextView _tvContent;
-    private TextView _tvCreated;
-    private TextView _tvEdited;
+    private TextView _tvTitle,
+            _tvContent,
+            _tvCreated,
+            _tvEdited;
+    private EditText _etTitle,
+            _etContent;
     private Switch _sIsFinished;
-    private FloatingActionButton _fabEdit;
-    private FloatingActionButton _fabDelete;
-    private FloatingActionButton _fabConfirmEdit;
-    private FloatingActionButton _fabCancelEdit;
+    private FloatingActionButton _fabEdit,
+            _fabDelete,
+            _fabConfirmEdit,
+            _fabCancelEdit;
 
     private LinearLayout _llEditButtons;
 
@@ -51,7 +54,7 @@ public class JobDetailFragment extends Fragment {
             this.setValuesToControls();
             this.setListeners();
 
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println(e);
         }
 
@@ -65,11 +68,13 @@ public class JobDetailFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-    private void initControls(){
+    private void initControls() {
         this._tvTitle = this._currentView.findViewById(R.id.job_title);
         this._tvContent = this._currentView.findViewById(R.id.job_detail_content);
         this._tvCreated = this._currentView.findViewById(R.id.job_created_date);
         this._tvEdited = this._currentView.findViewById(R.id.job_edited_date);
+        this._etTitle = this._currentView.findViewById(R.id.et_job_title);
+        this._etContent = this._currentView.findViewById(R.id.et_job_content);
         this._sIsFinished = this._currentView.findViewById(R.id.job_is_finished);
         this._fabEdit = this._currentView.findViewById(R.id.edit_job);
         this._fabDelete = this._currentView.findViewById(R.id.delete_job);
@@ -78,8 +83,8 @@ public class JobDetailFragment extends Fragment {
         this._llEditButtons = this._currentView.findViewById(R.id.edit_buttons);
     }
 
-    private void setListeners(){
-        this._fabEdit.setOnClickListener(    new View.OnClickListener() {
+    private void setListeners() {
+        this._fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Edited", Toast.LENGTH_SHORT).show();
@@ -87,7 +92,7 @@ public class JobDetailFragment extends Fragment {
             }
         });
 
-        this._fabDelete.setOnClickListener(    new View.OnClickListener() {
+        this._fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Delete", Toast.LENGTH_SHORT).show();
@@ -96,7 +101,7 @@ public class JobDetailFragment extends Fragment {
             }
         });
 
-        this._fabConfirmEdit.setOnClickListener(    new View.OnClickListener() {
+        this._fabConfirmEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Confirm Edit", Toast.LENGTH_SHORT).show();
@@ -104,7 +109,7 @@ public class JobDetailFragment extends Fragment {
             }
         });
 
-        this._fabCancelEdit.setOnClickListener(    new View.OnClickListener() {
+        this._fabCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Cancel Edit", Toast.LENGTH_SHORT).show();
@@ -113,27 +118,36 @@ public class JobDetailFragment extends Fragment {
         });
     }
 
-    private void showEditMode(){
-        if (!_isEditModeOn){
+    private void showEditMode() {
+        if (!_isEditModeOn) {
             this._llEditButtons.setVisibility(View.VISIBLE);
+            this._etTitle.setVisibility(View.VISIBLE);
+            this._etContent.setVisibility(View.VISIBLE);
+            this._tvTitle.setVisibility(View.GONE);
+            this._tvContent.setVisibility(View.GONE);
             this._fabEdit.setVisibility(View.GONE);
             this._isEditModeOn = true;
-        }
-        else{
+        } else {
             this._llEditButtons.setVisibility(View.GONE);
+            this._etTitle.setVisibility(View.GONE);
+            this._etContent.setVisibility(View.GONE);
+            this._tvTitle.setVisibility(View.VISIBLE);
+            this._tvContent.setVisibility(View.VISIBLE);
             this._fabEdit.setVisibility(View.VISIBLE);
             this._isEditModeOn = false;
         }
     }
 
-    private void setValuesToControls(){
-        String DATE_FORMAT = getString(R.string.date_format) ;
+    private void setValuesToControls() {
+        String DATE_FORMAT = getString(R.string.date_format);
         String TIME_FORMAT = getString(R.string.time_format);
 
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT+ " " + TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
         String edited = formatter.format(this._job.getEdited());
         String created = formatter.format(this._job.getCreated());
 
+        this._etTitle.setText(this._job.getTitle());
+        this._etContent.setText(this._job.getContent());
         this._tvTitle.setText(this._job.getTitle());
         this._tvContent.setText(this._job.getContent());
         this._tvCreated.setText(created);
