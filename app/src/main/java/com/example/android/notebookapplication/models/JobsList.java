@@ -23,18 +23,8 @@ public class JobsList implements Serializable {
     @ColumnInfo(name = "edited")
     private Date _edited;
 
-    @ColumnInfo(name = "owner")
-    private int _owner_id;
-
-    private List<Job> _jobsList;
-
-    public List<Job> get_jobsList() {
-        return this._jobsList;
-    }
-
-    public void set_jobsList(List<Job> _jobsList) {
-        this._jobsList = _jobsList;
-    }
+    @ColumnInfo(name = "user_id")
+    private long _owner_id;
 
     public String get_name() {
         return this._name;
@@ -60,11 +50,11 @@ public class JobsList implements Serializable {
         this._edited = _edited;
     }
 
-    public int get_owner_id() {
+    public long get_owner_id() {
         return this._owner_id;
     }
 
-    public void set_owner_id(int _owner_id) {
+    public void set_owner_id(long _owner_id) {
         this._owner_id = _owner_id;
     }
 

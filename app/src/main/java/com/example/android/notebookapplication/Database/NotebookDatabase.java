@@ -5,16 +5,20 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
+import com.example.android.notebookapplication.models.Job;
+import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
 import com.example.android.notebookapplication.models.UserDAO;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {User.class}, version = 3, exportSchema = false)
+@Database(entities = {User.class, JobsList.class, Job.class}, version = 3, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class NotebookDatabase extends RoomDatabase {
-    public abstract UserDAO userEntityDAO();
+    public abstract UserDAO userDAO();
 
     private static volatile NotebookDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

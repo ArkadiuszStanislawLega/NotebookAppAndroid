@@ -11,9 +11,7 @@ public class UserWithLists {
         @Embedded
         public User user;
 
-        @Relation(
-                parentColumn = "user_id",
-                entityColumn = "jobs_list_id"
-        )
+        @Relation(parentColumn = "user_id",
+                  entityColumn = "jobs_list_id")
         public List<JobsList> jobsLists;
 }

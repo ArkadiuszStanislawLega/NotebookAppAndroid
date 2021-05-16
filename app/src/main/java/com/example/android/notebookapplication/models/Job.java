@@ -27,8 +27,8 @@ public class Job implements Serializable {
     @ColumnInfo(name = "is_finished")
     private boolean _isFinished;
 
-    @ColumnInfo(name = "parent")
-    private int _parentId;
+    @ColumnInfo(name = "jobs_list_id")
+    private long _parentId;
 
     public int get_jobId() {
         return _jobId;
@@ -70,11 +70,11 @@ public class Job implements Serializable {
         this._content = _content;
     }
 
-    public int get_parentId() {
+    public long get_parentId() {
         return _parentId;
     }
 
-    public void set_parentId(int _parentId) {
+    public void set_parentId(long _parentId) {
         this._parentId = _parentId;
     }
 

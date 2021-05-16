@@ -89,21 +89,21 @@ public class ListFragment extends Fragment {
         jl1.set_name("Pierwsza");
         jl1.set_created(new Date());
         jl1.set_edited(new Date());
-        jl1.set_jobsList(jobs);
+
 
         JobsList jl2 = new JobsList();
         jl2.set_jobsListId(2);
         jl2.set_name("Druga");
         jl2.set_created(new Date());
         jl2.set_edited(new Date());
-        jl2.set_jobsList(jobs);
+
 
         JobsList jl3 = new JobsList();
         jl3.set_jobsListId(3);
         jl3.set_name("Trzecia");
         jl3.set_created(new Date());
         jl3.set_edited(new Date());
-        jl3.set_jobsList(jobs);
+
 
         JobsList jl4 = new JobsList();
         jl4.set_jobsListId(4);

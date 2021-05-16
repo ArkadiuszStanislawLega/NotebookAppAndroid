@@ -17,7 +17,6 @@ import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class LoggedInActivity extends AppCompatActivity {
@@ -33,6 +32,7 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+        this._database = NotebookDatabase.getDatabase(getApplicationContext());
 
         this._fragmentManager = getSupportFragmentManager();
 
@@ -46,32 +46,38 @@ public class LoggedInActivity extends AppCompatActivity {
             });
         }
 
-        User user = new User();
-        user.set_name("aro");
-        user.set_lastName("polapany");
-        user.set_email("aro.polapany@gmail.com");
-        user.set_password("admin");
-        user.set_userName("aro");
-        this._database.userEntityDAO().insert(user);
-
-
+//       this.save();
+        this.saveUsersLocally();
         this.changeContent(AppFragment.JobsList, null);
     }
 
-    private void saveUsersLocally(List<User> users) {
-        if (users == null) {
-            return;
-        }
+    private void save(){
         this._database.getQueryExecutor().execute(() -> {
-            final List<User> userEntities = this._database.userEntityDAO().getAll();
+            User user = new User();
+            user.set_name("aro");
+            user.set_lastName("polapany");
+            user.set_email("aro.polapany@gmail.com");
+            user.set_password("admin");
+            user.set_userName("aro");
+            this._database.userDAO().insert(user);
+        });
+    }
+
+
+    private void saveUsersLocally() {
+        this._database.getQueryExecutor().execute(() -> {
+            final List<User> userEntities = this._database.userDAO().getAll();
             if (userEntities != null) {
                 if (userEntities.size() > 0) {
                     return;
                 }
             }
-            for (User user: users) {
+            System.out.println("Tutaj:" + userEntities.size());
+            for (User user: userEntities) {
+                System.out.println(user);
                 if (user != null) {
-                    this._database.userEntityDAO().insert(user);
+//                    this._database.userDAO().insert(user);
+                    System.out.println(user.get_userName());
                 }
             }
         });
