@@ -40,22 +40,22 @@ public class JobFragment extends Fragment {
         Job j2 = new Job();
         Job j3 = new Job();
 
-        j1.setId(1);
-        j1.setContent("Pierwszy kontent");
-        j1.setTitle("Pierwszy tytuł");
-        j1.setCreated(new Date());
-        j1.setEdited(new Date());
-        j1.setFinished(true);
-        j2.setId(2);
-        j2.setContent("Drugi kontent");
-        j2.setTitle("Drugi tytuł");
-        j2.setCreated(new Date());
-        j2.setEdited(new Date());
-        j3.setId(3);
-        j3.setContent("Trzeci kontent");
-        j3.setTitle("Trzeci tytuł");
-        j3.setCreated(new Date());
-        j3.setEdited(new Date());
+        j1.set_jobId(1);
+        j1.set_content("Pierwszy kontent");
+        j1.set_title("Pierwszy tytuł");
+        j1.set_created(new Date());
+        j1.set_edited(new Date());
+        j1.set_isFinished(true);
+        j2.set_jobId(2);
+        j2.set_content("Drugi kontent");
+        j2.set_title("Drugi tytuł");
+        j2.set_created(new Date());
+        j2.set_edited(new Date());
+        j3.set_jobId(3);
+        j3.set_content("Trzeci kontent");
+        j3.set_title("Trzeci tytuł");
+        j3.set_created(new Date());
+        j3.set_edited(new Date());
 
         this._jobs.add(j1);
         this._jobs.add(j2);

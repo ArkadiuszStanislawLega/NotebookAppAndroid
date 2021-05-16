@@ -1,70 +1,88 @@
 package com.example.android.notebookapplication.models;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Date;
 
-
+@Entity(tableName = "Jobs")
 public class Job implements Serializable {
-    private int id;
-    private Date created;
-    private Date edited;
-    private String title;
-    private String Content;
-    private boolean isFinished;
-    private int parent_id;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "job_id")
+    private int _jobId;
 
-    public int getId() {
-        return id;
+    @ColumnInfo(name = "created")
+    private Date _created;
+
+    @ColumnInfo(name = "edited")
+    private Date _edited;
+
+    @ColumnInfo(name = "title")
+    private String _title;
+
+    @ColumnInfo(name = "content")
+    private String _content;
+
+    @ColumnInfo(name = "is_finished")
+    private boolean _isFinished;
+
+    @ColumnInfo(name = "parent")
+    private int _parentId;
+
+    public int get_jobId() {
+        return _jobId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void set_jobId(int _jobId) {
+        this._jobId = _jobId;
     }
 
-    public Date getCreated() {
-        return created;
+    public Date get_created() {
+        return _created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void set_created(Date _created) {
+        this._created = _created;
     }
 
-    public Date getEdited() {
-        return edited;
+    public Date get_edited() {
+        return _edited;
     }
 
-    public void setEdited(Date edited) {
-        this.edited = edited;
+    public void set_edited(Date _edited) {
+        this._edited = _edited;
     }
 
-    public String getTitle() {
-        return title;
+    public String get_title() {
+        return _title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void set_title(String _title) {
+        this._title = _title;
     }
 
-    public String getContent() {
-        return Content;
+    public String get_content() {
+        return _content;
     }
 
-    public void setContent(String content) {
-        Content = content;
+    public void set_content(String _content) {
+        this._content = _content;
     }
 
-    public int getParent_id() {
-        return parent_id;
+    public int get_parentId() {
+        return _parentId;
     }
 
-    public void setParent_id(int parent_id) {
-        this.parent_id = parent_id;
+    public void set_parentId(int _parentId) {
+        this._parentId = _parentId;
     }
 
-    public boolean isFinished() {
-        return isFinished;
+    public boolean is_isFinished() {
+        return _isFinished;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
+    public void set_isFinished(boolean _isFinished) {
+        this._isFinished = _isFinished;
     }
 }

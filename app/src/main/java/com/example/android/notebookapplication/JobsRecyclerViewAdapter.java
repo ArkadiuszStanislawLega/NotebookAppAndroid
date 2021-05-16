@@ -37,14 +37,14 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
         String DATE_FORMAT = "dd.MM.yyyy";
         String TIME_FORMAT = "HH:mm:ss";
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
-        String edited = formatter.format(this._jobs.get(position).getEdited());
-        String created = formatter.format(this._jobs.get(position).getCreated());
+        String edited = formatter.format(this._jobs.get(position).get_edited());
+        String created = formatter.format(this._jobs.get(position).get_created());
 
         holder.item = this._jobs.get(position);
-        holder.tvTitle.setText(this._jobs.get(position).getTitle());
+        holder.tvTitle.setText(this._jobs.get(position).get_title());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
-        if (this._jobs.get(position).isFinished())
+        if (this._jobs.get(position).is_isFinished())
             holder.ivIsFinished.setVisibility(View.VISIBLE);
         else
             holder.ivIsFinished.setVisibility(View.GONE);

@@ -39,11 +39,11 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         String DATE_FORMAT = "dd.MM.yyyy";
         String TIME_FORMAT = "HH:mm:ss";
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
-        String edited = formatter.format(this._lists.get(position).getEdited());
-        String created = formatter.format(this._lists.get(position).getCreated());
+        String edited = formatter.format(this._lists.get(position).get_edited());
+        String created = formatter.format(this._lists.get(position).get_created());
 
         holder.item = this._lists.get(position);
-        holder.tvName.setText(this._lists.get(position).getName());
+        holder.tvName.setText(this._lists.get(position).get_name());
         holder.tvEdited.setText(edited);
         holder.tvCreated.setText(created);
 

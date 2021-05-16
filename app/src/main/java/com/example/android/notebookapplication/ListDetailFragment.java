@@ -140,11 +140,11 @@ public class ListDetailFragment extends Fragment {
         String TIME_FORMAT = getString(R.string.time_format);
 
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
-        String edited = formatter.format(_jobsList.getEdited());
-        String created = formatter.format(_jobsList.getCreated());
+        String edited = formatter.format(_jobsList.get_edited());
+        String created = formatter.format(_jobsList.get_created());
 
-        this._etListName.setText("" + this._jobsList.getName());
-        this._tvListName.setText("" + this._jobsList.getName());
+        this._etListName.setText("" + this._jobsList.get_name());
+        this._tvListName.setText("" + this._jobsList.get_name());
         this._tvListEditedDate.setText(edited);
         this._tvListCreatedDate.setText(created);
     }

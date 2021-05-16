@@ -143,16 +143,16 @@ public class JobDetailFragment extends Fragment {
         String TIME_FORMAT = getString(R.string.time_format);
 
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
-        String edited = formatter.format(this._job.getEdited());
-        String created = formatter.format(this._job.getCreated());
+        String edited = formatter.format(this._job.get_edited());
+        String created = formatter.format(this._job.get_created());
 
-        this._etTitle.setText(this._job.getTitle());
-        this._etContent.setText(this._job.getContent());
-        this._tvTitle.setText(this._job.getTitle());
-        this._tvContent.setText(this._job.getContent());
+        this._etTitle.setText(this._job.get_title());
+        this._etContent.setText(this._job.get_content());
+        this._tvTitle.setText(this._job.get_title());
+        this._tvContent.setText(this._job.get_content());
         this._tvCreated.setText(created);
         this._tvEdited.setText(edited);
-        this._sIsFinished.setChecked(this._job.isFinished());
+        this._sIsFinished.setChecked(this._job.is_isFinished());
     }
 
 }

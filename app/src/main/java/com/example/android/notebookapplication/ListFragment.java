@@ -63,21 +63,21 @@ public class ListFragment extends Fragment {
         Job j2 = new Job();
         Job j3 = new Job();
 
-        j1.setId(1);
-        j1.setContent("Pierwszy kontent");
-        j1.setTitle("Pierwszy tytuł");
-        j1.setCreated(new Date());
-        j1.setEdited(new Date());
-        j2.setId(2);
-        j2.setContent("Drugi kontent");
-        j2.setTitle("Drugi tytuł");
-        j2.setCreated(new Date());
-        j2.setEdited(new Date());
-        j3.setId(3);
-        j3.setContent("Trzeci kontent");
-        j3.setTitle("Trzeci tytuł");
-        j3.setCreated(new Date());
-        j3.setEdited(new Date());
+        j1.set_jobId(1);
+        j1.set_content("Pierwszy kontent");
+        j1.set_title("Pierwszy tytuł");
+        j1.set_created(new Date());
+        j1.set_edited(new Date());
+        j2.set_jobId(2);
+        j2.set_content("Drugi kontent");
+        j2.set_title("Drugi tytuł");
+        j2.set_created(new Date());
+        j2.set_edited(new Date());
+        j3.set_jobId(3);
+        j3.set_content("Trzeci kontent");
+        j3.set_title("Trzeci tytuł");
+        j3.set_created(new Date());
+        j3.set_edited(new Date());
 
         List<Job> jobs = new ArrayList<>();
         jobs.add(j1);
@@ -85,37 +85,37 @@ public class ListFragment extends Fragment {
         jobs.add(j3);
 
         JobsList jl1 = new JobsList();
-        jl1.setId(1);
-        jl1.setName("Pierwsza");
-        jl1.setCreated(new Date());
-        jl1.setEdited(new Date());
-        jl1.setJobsList(jobs);
+        jl1.set_jobsListId(1);
+        jl1.set_name("Pierwsza");
+        jl1.set_created(new Date());
+        jl1.set_edited(new Date());
+        jl1.set_jobsList(jobs);
 
         JobsList jl2 = new JobsList();
-        jl2.setId(2);
-        jl2.setName("Druga");
-        jl2.setCreated(new Date());
-        jl2.setEdited(new Date());
-        jl2.setJobsList(jobs);
+        jl2.set_jobsListId(2);
+        jl2.set_name("Druga");
+        jl2.set_created(new Date());
+        jl2.set_edited(new Date());
+        jl2.set_jobsList(jobs);
 
         JobsList jl3 = new JobsList();
-        jl3.setId(3);
-        jl3.setName("Trzecia");
-        jl3.setCreated(new Date());
-        jl3.setEdited(new Date());
-        jl3.setJobsList(jobs);
+        jl3.set_jobsListId(3);
+        jl3.set_name("Trzecia");
+        jl3.set_created(new Date());
+        jl3.set_edited(new Date());
+        jl3.set_jobsList(jobs);
 
         JobsList jl4 = new JobsList();
-        jl4.setId(4);
-        jl4.setName("Czwarta");
-        jl4.setCreated(new Date());
-        jl4.setEdited(new Date());
+        jl4.set_jobsListId(4);
+        jl4.set_name("Czwarta");
+        jl4.set_created(new Date());
+        jl4.set_edited(new Date());
 
         JobsList jl5 = new JobsList();
-        jl5.setId(5);
-        jl5.setName("Piąta");
-        jl5.setCreated(new Date());
-        jl5.setEdited(new Date());
+        jl5.set_jobsListId(5);
+        jl5.set_name("Piąta");
+        jl5.set_created(new Date());
+        jl5.set_edited(new Date());
 
         this.lists.add(jl1);
         this.lists.add(jl2);
