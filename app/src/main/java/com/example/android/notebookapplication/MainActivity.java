@@ -11,7 +11,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
+import com.example.android.notebookapplication.models.Job;
+import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
 
 import java.util.List;
@@ -79,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+
     private void runLoggedInActivity(){
         Intent intent = new Intent(this, LoggedInActivity.class);
+        intent.putExtra("user", this._loggedInUser);
         startActivity(intent);
         finish();
     }

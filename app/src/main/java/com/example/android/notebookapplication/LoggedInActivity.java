@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class LoggedInActivity extends AppCompatActivity {
 
+    private User _loggedInUser;
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
@@ -32,6 +34,7 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+        this._loggedInUser = (User)getIntent().getSerializableExtra("user");
         this._database = NotebookDatabase.getDatabase(getApplicationContext());
 
         this._fragmentManager = getSupportFragmentManager();
@@ -46,6 +49,8 @@ public class LoggedInActivity extends AppCompatActivity {
             });
         }
         this.changeContent(AppFragment.JobsList, null);
+
+        Toast.makeText(this, "Witaj " + this._loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
     }
 
     private Fragment selectFragment(AppFragment appFragment){

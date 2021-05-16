@@ -1,9 +1,8 @@
 package com.example.android.notebookapplication.models;
 
 import androidx.room.Embedded;
-import androidx.room.Query;
 import androidx.room.Relation;
-import androidx.room.Transaction;
+
 
 import java.util.List;
 
