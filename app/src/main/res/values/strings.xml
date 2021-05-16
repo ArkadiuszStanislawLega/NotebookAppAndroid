@@ -32,5 +32,11 @@
     <string name="register_email">Adres e-mail:</string>
     <string name="register_password">Hasło:</string>
     <string name="register_confirm_password">Potwierdź hasło:</string>
+    <string name="register_failure">Rejestracja zakończone niepowodzeniem</string>
+    <string name="register_success">Rejestracja zakończona powodzeniem.</string>
+    <string name="register_wrong_username">Błędna nazwa użytkownika</string>
+    <string name="register_wrong_name">Błędne imię</string>
+    <string name="register_wrong_surname">Błędne nazwisko</string>
+    <string name="register_wrong_password">Błędne hasło - hasła muszą być takie same</string>
 
 </resources>

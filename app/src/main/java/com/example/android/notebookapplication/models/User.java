@@ -91,4 +91,5 @@ public class User {
     public void set_isActive(Boolean _isActive) {
         this._isActive = _isActive;
     }
+
 }

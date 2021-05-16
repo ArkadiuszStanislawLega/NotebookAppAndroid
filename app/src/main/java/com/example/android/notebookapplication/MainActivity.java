@@ -14,6 +14,8 @@ import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
 import com.example.android.notebookapplication.models.User;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static NotebookDatabase database;
@@ -21,10 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private User _loggedInUser;
 
-    private EditText _etLogin;
-    private EditText _etPass;
-    private Button _bLogin;
-    private Button _bRegister;
+    private EditText _etLogin, _etPass;
+    private Button _bLogin, _bRegister;
     private FrameLayout mainContent;
 
 
@@ -35,6 +35,13 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         database = NotebookDatabase.getDatabase(getApplicationContext());
+
+        database.getQueryExecutor().execute(() -> {
+            List<User> users = database.userDAO().getAll();
+            for (User user:users) {
+                System.out.println(user);
+            }
+        });
 
         this.initControls();
         this.initListeners();
@@ -69,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
     private void getUserFromDatabase() {
         database.getQueryExecutor().execute(() -> {
             this._loggedInUser = database.userDAO().findByName(this._etLogin.getText().toString());
-
         });
     }
 
