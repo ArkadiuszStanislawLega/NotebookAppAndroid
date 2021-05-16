@@ -10,15 +10,20 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
+import com.example.android.notebookapplication.models.User;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static NotebookDatabase database;
     private ActivityMainBinding binding;
 
-    private EditText edtLogin;
-    private EditText edtPass;
-    private Button btnLogin;
+    private User _loggedInUser;
+
+    private EditText _etLogin;
+    private EditText _etPass;
+    private Button _bLogin;
     private FrameLayout mainContent;
 
 
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        database = NotebookDatabase.getDatabase(getApplicationContext());
 
         this.initControls();
         this.initListeners();
@@ -35,58 +41,68 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void initControls() {
-        this.edtLogin = findViewById(R.id.edtLogin);
-        this.edtPass = findViewById(R.id.edtPass);
-        this.btnLogin = findViewById(R.id.btnLogin);
+        this._etLogin = findViewById(R.id.edtLogin);
+        this._etPass = findViewById(R.id.edtPass);
+        this._bLogin = findViewById(R.id.btnLogin);
     }
 
     private boolean authenticateUser() {
-        if (TextUtils.isEmpty(this.edtLogin.getText())) {
-            Toast.makeText(this,
-                    getString(R.string.login__validation_login_empty),
-                    Toast.LENGTH_SHORT)
-                    .show();
+        if (TextUtils.isEmpty(this._etLogin.getText())) {
+            Toast.makeText(this,getString(R.string.login__validation_login_empty),Toast.LENGTH_SHORT).show();
             return false;
-        } //if
-        if (TextUtils.isEmpty(this.edtPass.getText())) {
-            Toast.makeText(this,
-                    getString(R.string.login__validation_pass_empty),
-                    Toast.LENGTH_SHORT)
-                    .show();
+        }
+
+        if (TextUtils.isEmpty(this._etPass.getText())) {
+            Toast.makeText(this, getString(R.string.login__validation_pass_empty), Toast.LENGTH_SHORT).show();
             return false;
-        } //if
+        }
+
         if (this.isLoginValid() && this.isPasswordValid()) {
             return true;
-        } //if
+
+        }
         return false;
     }
 
+    private void getUserFromDatabase() {
+        database.getQueryExecutor().execute(() -> {
+            this._loggedInUser = database.userDAO().findByName(this._etLogin.getText().toString());
+
+        });
+    }
+
+    private void runLoggedInActivity(){
+        Intent intent = new Intent(this, LoggedInActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void initListeners() {
-        if (this.btnLogin != null) {
-            this.btnLogin.setOnClickListener(view -> {
+        if (this._bLogin != null) {
+            this._bLogin.setOnClickListener(view -> {
+                this.getUserFromDatabase();
                 if (this.authenticateUser()) {
-                    Toast.makeText(this,
-                            getString(R.string.login__success),
-                            Toast.LENGTH_SHORT)
-                            .show();
-                    Intent intent = new Intent(this, LoggedInActivity.class);
-                    startActivity(intent);
-                    finish();
+                    Toast.makeText(this, getString(R.string.login__success), Toast.LENGTH_SHORT).show();
+                    this.runLoggedInActivity();
                     return;
                 }
-                Toast.makeText(this,
-                        getString(R.string.login__failure),
-                        Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show();
             });
-        } //if
+        }
     }
 
-    private boolean isLoginValid(){
-        return this.edtLogin.getText().toString().equals("admin");
+
+    private boolean isLoginValid() {
+        if (this._loggedInUser != null)
+            return this._etLogin.getText().toString().equals(this._loggedInUser.get_name());
+
+        return false;
     }
 
-    private boolean isPasswordValid(){
-        return this.edtPass.getText().toString().equals("admin");
+    private boolean isPasswordValid() {
+        if (this._loggedInUser != null)
+            return this._etPass.getText().toString().equals(this._loggedInUser.get_password());
+
+        return  false;
     }
 }

@@ -45,42 +45,7 @@ public class LoggedInActivity extends AppCompatActivity {
                 finish();
             });
         }
-
-//       this.save();
-        this.saveUsersLocally();
         this.changeContent(AppFragment.JobsList, null);
-    }
-
-    private void save(){
-        this._database.getQueryExecutor().execute(() -> {
-            User user = new User();
-            user.set_name("aro");
-            user.set_lastName("polapany");
-            user.set_email("aro.polapany@gmail.com");
-            user.set_password("admin");
-            user.set_userName("aro");
-            this._database.userDAO().insert(user);
-        });
-    }
-
-
-    private void saveUsersLocally() {
-        this._database.getQueryExecutor().execute(() -> {
-            final List<User> userEntities = this._database.userDAO().getAll();
-            if (userEntities != null) {
-                if (userEntities.size() > 0) {
-                    return;
-                }
-            }
-            System.out.println("Tutaj:" + userEntities.size());
-            for (User user: userEntities) {
-                System.out.println(user);
-                if (user != null) {
-//                    this._database.userDAO().insert(user);
-                    System.out.println(user.get_userName());
-                }
-            }
-        });
     }
 
     private Fragment selectFragment(AppFragment appFragment){
