@@ -39,13 +39,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         database = NotebookDatabase.getDatabase(getApplicationContext());
 
-        database.getQueryExecutor().execute(() -> {
-            List<User> users = database.userDAO().getAll();
-            for (User user:users) {
-                System.out.println(user);
-            }
-        });
-
         this.initControls();
         this.initListeners();
     }

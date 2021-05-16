@@ -44,7 +44,7 @@ public class ListDetailFragment extends Fragment {
         this._currentView = inflater.inflate(R.layout.list_detail_fragment, container, false);
 
         try {
-            _jobsList = (JobsList) getArguments().getSerializable("list");
+            this._jobsList = (JobsList) getArguments().getSerializable("list");
             this.initControls();
             this.setValuesToControls();
             this.setListeners();

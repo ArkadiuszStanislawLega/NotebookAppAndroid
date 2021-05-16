@@ -28,6 +28,6 @@ public interface UserDAO {
 
     @Transaction
     @Query("SELECT * FROM Users")
-    public List<UserWithLists> getUsersWithJobsLists();
+    public UserWithLists getUsersWithJobsLists();
 }
 
