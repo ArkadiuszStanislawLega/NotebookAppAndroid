@@ -6,12 +6,12 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="login_login">Zaloguj</string>
-    <string name="login__hint_password">Hasło</string>
-    <string name="login__hint_login">Login</string>
-    <string name="login__info">Proszę podać login i hasło, aby kontynuować.</string>
-    <string name="login__validation_pass_empty">Proszę podać hasło.</string>
-    <string name="login__validation_login_empty">Proszę podać login.</string>
-    <string name="login__success">Logowanie powiodło się.</string>
+    <string name="login_hint_password">Hasło</string>
+    <string name="login_hint_login">Login</string>
+    <string name="login_info">Proszę podać login i hasło, aby kontynuować.</string>
+    <string name="login_validation_pass_empty">Proszę podać hasło.</string>
+    <string name="login_validation_login_empty">Proszę podać login.</string>
+    <string name="login_success">Logowanie powiodło się.</string>
     <string name="login_failure">Logowanie nie powiodło się. Prosimy spróbować ponownie.</string>
     <string name="logged_in__logout">Wyloguj</string>
     <string name="list_detail_name">Nazwa listy:</string>
@@ -25,5 +25,12 @@
     <string name="job_detail_is_finished">Zakończone</string>
     <string name="register">Zarejestruj</string>
     <string name="back_to_login">Zaloguj się</string>
+    <string name="confirm_register">Zarejestruj</string>
+    <string name="register_username">Nazwa użytkownika:</string>
+    <string name="register_surname">Nazwisko:</string>
+    <string name="register_name">Imię:</string>
+    <string name="register_email">Adres e-mail:</string>
+    <string name="register_password">Hasło:</string>
+    <string name="register_confirm_password">Potwierdź hasło:</string>
 
 </resources>

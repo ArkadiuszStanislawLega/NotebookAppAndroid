@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean authenticateUser() {
         if (TextUtils.isEmpty(this._etLogin.getText())) {
-            Toast.makeText(this,getString(R.string.login__validation_login_empty),Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.login_validation_login_empty),Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (TextUtils.isEmpty(this._etPass.getText())) {
-            Toast.makeText(this, getString(R.string.login__validation_pass_empty), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.login_validation_pass_empty), Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             this._bLogin.setOnClickListener(view -> {
                 this.getUserFromDatabase();
                 if (this.authenticateUser()) {
-                    Toast.makeText(this, getString(R.string.login__success), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                     this.runLoggedInActivity();
                     return;
                 }
