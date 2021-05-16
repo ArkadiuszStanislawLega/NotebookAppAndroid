@@ -5,7 +5,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="login__login">Zaloguj</string>
+    <string name="login_login">Zaloguj</string>
     <string name="login__hint_password">Hasło</string>
     <string name="login__hint_login">Login</string>
     <string name="login__info">Proszę podać login i hasło, aby kontynuować.</string>
@@ -23,5 +23,7 @@
     <string name="job_detail_edit_date">Data ostatniej edycji:</string>
     <string name="job_detail_content">Treść zadania</string>
     <string name="job_detail_is_finished">Zakończone</string>
+    <string name="register">Zarejestruj</string>
+    <string name="back_to_login">Zaloguj się</string>
 
 </resources>

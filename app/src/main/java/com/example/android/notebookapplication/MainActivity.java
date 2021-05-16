@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText _etLogin;
     private EditText _etPass;
     private Button _bLogin;
+    private Button _bRegister;
     private FrameLayout mainContent;
 
 
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         this._etLogin = findViewById(R.id.edtLogin);
         this._etPass = findViewById(R.id.edtPass);
         this._bLogin = findViewById(R.id.btnLogin);
+        this._bRegister = findViewById(R.id.b_register);
     }
 
     private boolean authenticateUser() {
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    private void runRegisterActivity(){
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     private void initListeners() {
         if (this._bLogin != null) {
             this._bLogin.setOnClickListener(view -> {
@@ -89,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.login_failure), Toast.LENGTH_SHORT).show();
             });
         }
+        if (this._bRegister != null){
+            this._bRegister.setOnClickListener(view -> {
+                runRegisterActivity();
+            });
+        }
+
     }
 
 
