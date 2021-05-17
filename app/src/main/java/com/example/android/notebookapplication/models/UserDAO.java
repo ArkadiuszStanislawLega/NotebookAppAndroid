@@ -15,7 +15,7 @@ public interface UserDAO {
     List<User> getAll();
 
     @Query("SELECT * FROM Users WHERE userName LIKE :username LIMIT 1")
-    User findByName(String username);
+    User findByUsername(String username);
 
     @Insert
     void insert(User... Users);

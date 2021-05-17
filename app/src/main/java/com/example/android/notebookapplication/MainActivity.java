@@ -11,17 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
-import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
-import com.example.android.notebookapplication.models.Job;
-import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static NotebookDatabase database;
     private ActivityMainBinding binding;
 
     private User _loggedInUser;
@@ -29,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText _etLogin, _etPass;
     private Button _bLogin, _bRegister;
     private FrameLayout mainContent;
-
+    private NotebookDatabase _database;
+    private  List<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +34,16 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        database = NotebookDatabase.getDatabase(getApplicationContext());
 
+        this._database = NotebookDatabase.getDatabase(getApplicationContext());
         this.initControls();
         this.initListeners();
+
+
+        this._database.getQueryExecutor().execute(() -> {
+            users  = this._database.userDAO().getAll();
+        });
+        System.out.println(users);
     }
 
 
@@ -64,14 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (this.isLoginValid() && this.isPasswordValid()) {
             return true;
-
         }
         return false;
     }
 
     private void getUserFromDatabase() {
-        database.getQueryExecutor().execute(() -> {
-            this._loggedInUser = database.userDAO().findByName(this._etLogin.getText().toString());
+        this._database.getQueryExecutor().execute(() -> {
+            this._loggedInUser = this._database.userDAO().findByUsername(this._etLogin.getText().toString());
         });
     }
 
@@ -109,17 +111,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private boolean isLoginValid() {
-        if (this._loggedInUser != null)
-            return this._etLogin.getText().toString().equals(this._loggedInUser.get_name());
+        if (this._loggedInUser != null) {
+            String etUsername = this._etLogin.getText().toString();
+            String dbUsername = this._loggedInUser.get_userName();
+            return etUsername.equals(dbUsername);
+        }
 
         return false;
     }
 
     private boolean isPasswordValid() {
-        if (this._loggedInUser != null)
-            return this._etPass.getText().toString().equals(this._loggedInUser.get_password());
+        if (this._loggedInUser != null){
+            String etPassword = this._etPass.getText().toString();
+            String dbPassword = this._loggedInUser.get_password();
+            return etPassword.equals(dbPassword);
+        }
+
 
         return  false;
     }

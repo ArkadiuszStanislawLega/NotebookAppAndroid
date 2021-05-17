@@ -12,9 +12,6 @@ import android.widget.Toast;
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.models.User;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private Button _bLogin, _bRegister;
@@ -52,16 +49,18 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean isUsernameValid() {
         boolean value = false;
 
-        if (TextUtils.isEmpty(this._etUsername.getText()))
-            value = false;
-
-        if (!value) {
-            this._database.getQueryExecutor().execute(() -> {
-                this._user = this._database.userDAO().findByName(this._etUsername.getText().toString());
-            });
-            if (this._user == null)
-                value = true;
+        if (TextUtils.isEmpty(this._etUsername.getText())) {
+            return false;
         }
+
+        this._database.getQueryExecutor().execute(() -> {
+            this._user = this._database.userDAO().findByUsername(this._etUsername.getText().toString());
+        });
+
+        if (this._user == null ) {
+            value = true;
+        }
+
 
         if (!value)
             Toast.makeText(this, getString(R.string.register_wrong_username), Toast.LENGTH_SHORT).show();
