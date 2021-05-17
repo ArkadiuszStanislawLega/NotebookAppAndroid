@@ -2,11 +2,14 @@ package com.example.android.notebookapplication.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import static androidx.room.ForeignKey.CASCADE;
 
 @Entity(tableName = "Jobs_lists")
 public class JobsList implements Serializable {
@@ -23,7 +26,10 @@ public class JobsList implements Serializable {
     @ColumnInfo(name = "edited")
     private Date _edited;
 
-    @ColumnInfo(name = "user_id")
+    @ForeignKey(entity = User.class,
+            parentColumns = "user_id",
+            childColumns = "jobs_list_id",
+            onDelete = CASCADE)
     private long _owner_id;
 
     public String get_name() {

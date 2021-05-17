@@ -23,17 +23,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LoggedInActivity extends AppCompatActivity {
 
     public static User loggedInUser;
-    public static UserWithLists userWithLists;
-    public static List<JobsList> list;
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
     private AppFragment currentFragment;
     private FloatingActionButton _fabAddList;
+    private Button _bLogout;
 
     private NotebookDatabase _database;
 
@@ -47,15 +47,24 @@ public class LoggedInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
+
         this.loggedInUser = (User)getIntent().getSerializableExtra("user");
-        this._database = NotebookDatabase.getDatabase(getApplicationContext());
+        this._fragmentManager = getSupportFragmentManager();
 
-        this._database.getQueryExecutor().execute(() -> {
-            this.userWithLists = this._database.userDAO().getUsersWithJobsLists();
-            this.list = this._database.jobsListDAO().getAll();
-        });
-        this._fabAddList = findViewById(R.id.add_list);
+        this.initDatabase();
+        this.initControls();
+        this.initListeners();
 
+        this.changeContent(AppFragment.JobsList, null);
+
+        Toast.makeText(this, "Witaj " + this.loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void ButtonVisible(){
+        this._fabAddList.setVisibility(View.VISIBLE);
+    }
+
+    private void initListeners(){
         this._fabAddList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,25 +79,23 @@ public class LoggedInActivity extends AppCompatActivity {
                 });
             }
         });
-        this._fragmentManager = getSupportFragmentManager();
 
-        Button btnLogout = findViewById(R.id.btnLogout);
-        if (btnLogout != null) {
-
-            btnLogout.setOnClickListener(view -> {
+        if (this._bLogout != null) {
+            this._bLogout.setOnClickListener(view -> {
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
 
                 finish();
             });
         }
-        this.changeContent(AppFragment.JobsList, null);
-
-        Toast.makeText(this, "Witaj " + this.loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
     }
 
-    public void ButtonVisible(){
-        this._fabAddList.setVisibility(View.VISIBLE);
+    private void initDatabase(){
+        this._database = NotebookDatabase.getDatabase(getApplicationContext());
+
+        this._database.getQueryExecutor().execute(() -> {
+            loggedInUser.set_jobsList(this._database.jobsListDAO().getUserWithLists(loggedInUser.get_userId()));
+        });
     }
 
     private Fragment selectFragment(AppFragment appFragment){
@@ -136,6 +143,8 @@ public class LoggedInActivity extends AppCompatActivity {
     }
 
     private void initControls(){
+        this._bLogout = findViewById(R.id.btnLogout);
+        this._fabAddList = findViewById(R.id.add_list);
         this._mainContent = findViewById(R.id.main_content);
     }
 }

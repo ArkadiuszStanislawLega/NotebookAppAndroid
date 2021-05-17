@@ -30,8 +30,8 @@ public interface JobsListDAO {
         void delete(JobsList Jobs_lists);
 
         @Transaction
-        @Query("SELECT * FROM Jobs_lists WHERE user_id = :id ")
-        public List<JobsListWithJobs> getJobsListWithJobs(int id);
+        @Query("SELECT * FROM Jobs_lists WHERE _owner_id= :id ")
+        public List<JobsList> getUserWithLists(long id);
     }
 
 

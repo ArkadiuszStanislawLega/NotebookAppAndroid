@@ -33,8 +33,8 @@ public abstract class NotebookDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE =
                             Room.databaseBuilder(context.getApplicationContext(),
-                                    NotebookDatabase.class, "example_database")
-                                    .fallbackToDestructiveMigration() //!!!uwaga!!!
+                                    NotebookDatabase.class, "notebook_database")
+//                                    .fallbackToDestructiveMigration() //!!!uwaga!!!
                                     .build();
                 }
             }

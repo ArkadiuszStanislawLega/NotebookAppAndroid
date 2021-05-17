@@ -2,9 +2,11 @@ package com.example.android.notebookapplication.models;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity(tableName = "Users")
 public class User implements Serializable {
@@ -29,6 +31,9 @@ public class User implements Serializable {
 
     @ColumnInfo(name = "is_active")
     private Boolean _isActive;
+
+    @Ignore
+    private List<JobsList> _jobsList;
 
     public long getId() {
         return this._userId;
@@ -94,4 +99,11 @@ public class User implements Serializable {
         this._isActive = _isActive;
     }
 
+    public List<JobsList> get_jobsList() {
+        return _jobsList;
+    }
+
+    public void set_jobsList(List<JobsList> _jobsList) {
+        this._jobsList = _jobsList;
+    }
 }

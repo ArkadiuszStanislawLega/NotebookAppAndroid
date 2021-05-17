@@ -83,7 +83,7 @@ public class ListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new ListsRecyclerViewAdapter(LoggedInActivity.userWithLists.jobsLists));
+            recyclerView.setAdapter(new ListsRecyclerViewAdapter(LoggedInActivity.loggedInUser.get_jobsList()));
         }
         return _currentView;
     }
