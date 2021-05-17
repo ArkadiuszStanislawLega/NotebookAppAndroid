@@ -14,19 +14,20 @@ import android.view.ViewGroup;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.models.JobsList;
+import com.example.android.notebookapplication.models.User;
 import com.example.android.notebookapplication.models.UserWithLists;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A fragment representing a list of Items.
  */
 public class ListFragment extends Fragment {
 
+    private User _loggedInUser;
     NotebookDatabase _database;
-    UserWithLists userWithLists;
-    List<JobsList> list;
     View _currentView;
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -38,9 +39,11 @@ public class ListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ListFragment() {
+        this._loggedInUser = LoggedInActivity.loggedInUser;
     }
 
     private List<JobsList> lists = new ArrayList<>();
+
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static ListFragment newInstance(int columnCount) {
@@ -60,6 +63,9 @@ public class ListFragment extends Fragment {
         }
     }
 
+    public void REFRESH(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,10 +75,20 @@ public class ListFragment extends Fragment {
         this._database = NotebookDatabase.getDatabase(this.getContext());
 
         this._database.getQueryExecutor().execute(() -> {
-            this.userWithLists = this._database.userDAO().getUsersWithJobsLists();
+            this._loggedInUser.set_jobsList(null);
+            List<JobsList> jobsLists = this._database.jobsListDAO().getUserWithLists(this._loggedInUser.get_userId());
+            this._loggedInUser.set_jobsList(jobsLists);
         });
-        LoggedInActivity parent = (LoggedInActivity)getActivity();
+
+        try {
+            TimeUnit.MILLISECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        LoggedInActivity parent = (LoggedInActivity) getActivity();
         parent.ButtonVisible();
+
         // Set the adapter
         if (_currentView instanceof RecyclerView) {
             Context context = _currentView.getContext();
@@ -83,7 +99,7 @@ public class ListFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new ListsRecyclerViewAdapter(LoggedInActivity.loggedInUser.get_jobsList()));
+            recyclerView.setAdapter(new ListsRecyclerViewAdapter(this._loggedInUser.get_jobsList()));
         }
         return _currentView;
     }

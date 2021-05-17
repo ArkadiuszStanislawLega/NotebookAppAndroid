@@ -1,5 +1,6 @@
 package com.example.android.notebookapplication;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -7,6 +8,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +20,10 @@ import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
-import com.example.android.notebookapplication.models.UserWithLists;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
+
 
 public class LoggedInActivity extends AppCompatActivity {
 
@@ -34,6 +34,7 @@ public class LoggedInActivity extends AppCompatActivity {
     private AppFragment currentFragment;
     private FloatingActionButton _fabAddList;
     private Button _bLogout;
+
 
     private NotebookDatabase _database;
 
@@ -66,6 +67,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private void initListeners(){
         this._fabAddList.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 _database.getQueryExecutor().execute(() -> {
