@@ -3,9 +3,11 @@ package com.example.android.notebookapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,18 +17,16 @@ import com.example.android.notebookapplication.databinding.ActivityMainBinding;
 import com.example.android.notebookapplication.models.User;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
     private User _loggedInUser;
-
     private EditText _etLogin, _etPass;
     private Button _bLogin, _bRegister;
-    private FrameLayout mainContent;
     private NotebookDatabase _database;
-    private  List<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +38,6 @@ public class MainActivity extends AppCompatActivity {
         this._database = NotebookDatabase.getDatabase(getApplicationContext());
         this.initControls();
         this.initListeners();
-
-
-        this._database.getQueryExecutor().execute(() -> {
-            users  = this._database.userDAO().getAll();
-        });
-        System.out.println(users);
     }
 
 
@@ -77,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void awaitForData(){
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void runLoggedInActivity(){
         Intent intent = new Intent(this, LoggedInActivity.class);
@@ -94,9 +96,12 @@ public class MainActivity extends AppCompatActivity {
     private void initListeners() {
         if (this._bLogin != null) {
             this._bLogin.setOnClickListener(view -> {
+                this._loggedInUser = null;
+
                 this.getUserFromDatabase();
+                this.awaitForData();
+
                 if (this.authenticateUser()) {
-                    Toast.makeText(this, getString(R.string.login_success), Toast.LENGTH_SHORT).show();
                     this.runLoggedInActivity();
                     return;
                 }
