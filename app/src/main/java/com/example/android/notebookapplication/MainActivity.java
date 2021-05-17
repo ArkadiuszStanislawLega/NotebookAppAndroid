@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void awaitForData(){
         try {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.MILLISECONDS.sleep(500);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
             String dbUsername = this._loggedInUser.get_userName();
             return etUsername.equals(dbUsername);
         }
-
         return false;
     }
 
@@ -132,8 +131,6 @@ public class MainActivity extends AppCompatActivity {
             String dbPassword = this._loggedInUser.get_password();
             return etPassword.equals(dbPassword);
         }
-
-
         return  false;
     }
 }

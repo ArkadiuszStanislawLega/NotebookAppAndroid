@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.models.User;
 
+import java.util.concurrent.TimeUnit;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private Button _bLogin, _bRegister;
@@ -52,18 +54,21 @@ public class RegisterActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(this._etUsername.getText())) {
             return false;
         }
+        this._user = null;
 
         this._database.getQueryExecutor().execute(() -> {
             this._user = this._database.userDAO().findByUsername(this._etUsername.getText().toString());
         });
 
         try {
-            if (this._user == null && !this._user.get_userName().equals(this._etUsername.getText().toString())) {
-                value = true;
-            }
-        }catch (NullPointerException e){
+            TimeUnit.MILLISECONDS.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (this._user == null) {
             value = true;
-        } 
+        }
 
         if (!value)
             Toast.makeText(this, getString(R.string.register_wrong_username), Toast.LENGTH_SHORT).show();
@@ -125,6 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (this._bRegister != null) {
             this._bRegister.setOnClickListener(view -> {
                 if (isUsernameValid() && isNameValid() && isSurnameValid() && isEmailValid() && isPasswordValid()) {
+
                     User user = new User();
                     user.set_userName(this._etUsername.getText().toString());
                     user.set_name(this._etName.getText().toString());
