@@ -57,10 +57,13 @@ public class RegisterActivity extends AppCompatActivity {
             this._user = this._database.userDAO().findByUsername(this._etUsername.getText().toString());
         });
 
-        if (this._user == null ) {
+        try {
+            if (this._user == null && !this._user.get_userName().equals(this._etUsername.getText().toString())) {
+                value = true;
+            }
+        }catch (NullPointerException e){
             value = true;
-        }
-
+        } 
 
         if (!value)
             Toast.makeText(this, getString(R.string.register_wrong_username), Toast.LENGTH_SHORT).show();
