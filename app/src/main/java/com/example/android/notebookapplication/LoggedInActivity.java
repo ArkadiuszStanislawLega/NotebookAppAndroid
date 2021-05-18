@@ -1,17 +1,20 @@
 package com.example.android.notebookapplication;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -34,7 +37,7 @@ public class LoggedInActivity extends AppCompatActivity {
     private AppFragment currentFragment;
     private FloatingActionButton _fabAddList;
     private Button _bLogout;
-
+    String editable;
 
     private NotebookDatabase _database;
 
@@ -71,13 +74,14 @@ public class LoggedInActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 _database.getQueryExecutor().execute(() -> {
-                    JobsList jobsList = new JobsList();
-                    jobsList.set_name("Nowa lista");
-                    jobsList.set_owner_id(loggedInUser.get_userId());
-                    jobsList.set_created(new Date());
-                    jobsList.set_edited(new Date());
-
-                    _database.jobsListDAO().insert(jobsList);
+//                    JobsList jobsList = new JobsList();
+//                    jobsList.set_name("Nowa lista");
+//                    jobsList.set_owner_id(loggedInUser.get_userId());
+//                    jobsList.set_created(new Date());
+//                    jobsList.set_edited(new Date());
+//
+//                    _database.jobsListDAO().insert(jobsList);
+                    Dialog();
                 });
             }
         });
@@ -91,7 +95,10 @@ public class LoggedInActivity extends AppCompatActivity {
             });
         }
     }
-
+    private void Dialog(){
+        DialogAddListFragment dialog = new DialogAddListFragment();
+        dialog.show(getSupportFragmentManager(), "DialogAddListFragment");
+    }
     private void initDatabase(){
         this._database = NotebookDatabase.getDatabase(getApplicationContext());
 

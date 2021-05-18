@@ -38,5 +38,8 @@
     <string name="register_wrong_name">Błędne imię</string>
     <string name="register_wrong_surname">Błędne nazwisko</string>
     <string name="register_wrong_password">Błędne hasło - hasła muszą być takie same</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="set_name_new_list">Podaj nazwę listy</string>
 
 </resources>
