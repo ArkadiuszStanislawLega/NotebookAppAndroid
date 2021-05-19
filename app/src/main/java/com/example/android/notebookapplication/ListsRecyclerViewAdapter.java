@@ -53,8 +53,8 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
-                    LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
-                    mainActivity.changeContent(AppFragment.JobsListDetail, _lists.get(position));
+                    LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
+                    loggedInActivity.changeContent(AppFragment.JobsListDetail, _lists.get(position));
                 }
             }
         });

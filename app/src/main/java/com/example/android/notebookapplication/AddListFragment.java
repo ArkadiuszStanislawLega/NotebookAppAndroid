@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.User;
 
@@ -51,7 +52,7 @@ public class AddListFragment extends Fragment {
 
         this._loggedUser = LoggedInActivity.loggedInUser;
         this._currentView = inflater.inflate(R.layout.fragment_add_list, container, false);
-        
+
         this.initDatabase();
         this.initControls();
         this.initListeners();
@@ -71,6 +72,7 @@ public class AddListFragment extends Fragment {
                     jobsList.set_edited(new Date());
 
                     _database.jobsListDAO().insert(jobsList);
+
                 });
             }
         });
