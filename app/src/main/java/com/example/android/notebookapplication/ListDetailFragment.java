@@ -14,10 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.notebookapplication.Database.NotebookDatabase;
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.JobsList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ListDetailFragment extends Fragment {
     private boolean _isEditModeOn = false;
@@ -33,6 +36,7 @@ public class ListDetailFragment extends Fragment {
             _fabCancelEdit;
     private LinearLayout _llEditButtons;
     private View _currentView;
+    NotebookDatabase _database;
 
     public static ListDetailFragment newInstance() {
         return new ListDetailFragment();
@@ -42,6 +46,7 @@ public class ListDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         this._currentView = inflater.inflate(R.layout.list_detail_fragment, container, false);
+        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
         try {
             this._jobsList = (JobsList) getArguments().getSerializable("list");
@@ -101,6 +106,13 @@ public class ListDetailFragment extends Fragment {
                 Toast.makeText(_currentView.getContext(), "List Delete", Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
                     showEditMode();
+
+                _database.getQueryExecutor().execute(() -> {
+                    _database.jobsListDAO().delete(_jobsList);
+                });
+
+                LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
+                loggedInActivity.changeContent(AppFragment.JobsList, null);
             }
         });
         this._fabConfirmEdit.setOnClickListener(new View.OnClickListener() {

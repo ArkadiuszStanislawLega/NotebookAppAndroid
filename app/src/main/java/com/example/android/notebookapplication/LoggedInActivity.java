@@ -26,6 +26,7 @@ import com.example.android.notebookapplication.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
+import java.util.List;
 
 
 public class LoggedInActivity extends AppCompatActivity {
@@ -44,6 +45,7 @@ public class LoggedInActivity extends AppCompatActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +60,10 @@ public class LoggedInActivity extends AppCompatActivity {
         this.changeContent(AppFragment.JobsList, null);
 
         Toast.makeText(this, "Witaj " + this.loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
-    }
 
+        List<android.app.Fragment> lists =  this.getFragmentManager().getFragments();
+
+    }
 
     private void initListeners(){
         if (this._bLogout != null) {
