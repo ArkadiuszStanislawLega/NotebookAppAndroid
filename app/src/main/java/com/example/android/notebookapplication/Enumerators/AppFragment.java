@@ -5,4 +5,5 @@ public enum AppFragment {
     JobsList,
     JobsListDetail,
     JobDetail,
+    AddList,
 }

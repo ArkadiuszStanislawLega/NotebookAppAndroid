@@ -35,11 +35,8 @@ public class LoggedInActivity extends AppCompatActivity {
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
     private AppFragment currentFragment;
-    private FloatingActionButton _fabAddList;
     private Button _bLogout;
-    String editable;
 
-    private NotebookDatabase _database;
 
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
@@ -55,7 +52,6 @@ public class LoggedInActivity extends AppCompatActivity {
         this.loggedInUser = (User)getIntent().getSerializableExtra("user");
         this._fragmentManager = getSupportFragmentManager();
 
-        this.initDatabase();
         this.initControls();
         this.initListeners();
 
@@ -64,28 +60,8 @@ public class LoggedInActivity extends AppCompatActivity {
         Toast.makeText(this, "Witaj " + this.loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
     }
 
-    public void ButtonVisible(){
-        this._fabAddList.setVisibility(View.VISIBLE);
-    }
 
     private void initListeners(){
-        this._fabAddList.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                _database.getQueryExecutor().execute(() -> {
-//                    JobsList jobsList = new JobsList();
-//                    jobsList.set_name("Nowa lista");
-//                    jobsList.set_owner_id(loggedInUser.get_userId());
-//                    jobsList.set_created(new Date());
-//                    jobsList.set_edited(new Date());
-//
-//                    _database.jobsListDAO().insert(jobsList);
-                    Dialog();
-                });
-            }
-        });
-
         if (this._bLogout != null) {
             this._bLogout.setOnClickListener(view -> {
                 Intent intent = new Intent(this, MainActivity.class);
@@ -94,17 +70,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 finish();
             });
         }
-    }
-    private void Dialog(){
-        DialogAddListFragment dialog = new DialogAddListFragment();
-        dialog.show(getSupportFragmentManager(), "DialogAddListFragment");
-    }
-    private void initDatabase(){
-        this._database = NotebookDatabase.getDatabase(getApplicationContext());
-
-        this._database.getQueryExecutor().execute(() -> {
-            loggedInUser.set_jobsList(this._database.jobsListDAO().getUserWithLists(loggedInUser.get_userId()));
-        });
     }
 
     private Fragment selectFragment(AppFragment appFragment){
@@ -116,6 +81,8 @@ public class LoggedInActivity extends AppCompatActivity {
                 return new JobDetailFragment();
             case JobsListDetail:
                 return new ListDetailFragment();
+            case AddList:
+                return new AddListFragment();
             default:
                 return null;
         }
@@ -145,7 +112,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 this._fragmentTransaction.replace(R.id.main_content, instance);
 
             this.currentFragment = appFragment;
-            this._fabAddList.setVisibility(View.GONE);
             this._fragmentTransaction.addToBackStack(null);
             this._fragmentTransaction.commit();
         }
@@ -153,7 +119,6 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private void initControls(){
         this._bLogout = findViewById(R.id.btnLogout);
-        this._fabAddList = findViewById(R.id.add_list);
         this._mainContent = findViewById(R.id.main_content);
     }
 }

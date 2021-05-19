@@ -29,6 +29,7 @@ public class ListFragment extends Fragment {
     private User _loggedInUser;
     NotebookDatabase _database;
     View _currentView;
+    RecyclerView _rvList;
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -39,7 +40,7 @@ public class ListFragment extends Fragment {
      * fragment (e.g. upon screen orientation changes).
      */
     public ListFragment() {
-        this._loggedInUser = LoggedInActivity.loggedInUser;
+
     }
 
     private List<JobsList> lists = new ArrayList<>();
@@ -71,35 +72,36 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         _currentView = inflater.inflate(R.layout.lists_fragment, container, false);
+        this._rvList = this._currentView.findViewById(R.id.list);
 
-        this._database = NotebookDatabase.getDatabase(this.getContext());
+        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
+        this._loggedInUser = LoggedInActivity.loggedInUser;
 
         this._database.getQueryExecutor().execute(() -> {
             this._loggedInUser.set_jobsList(null);
-            List<JobsList> jobsLists = this._database.jobsListDAO().getUserWithLists(this._loggedInUser.get_userId());
+            List<JobsList> jobsLists =
+                    this._database.jobsListDAO().getUserWithLists(this._loggedInUser.get_userId());
+//            List<JobsList> jobsLists = this._database.jobsListDAO().getAll();
             this._loggedInUser.set_jobsList(jobsLists);
         });
 
         try {
-            TimeUnit.MILLISECONDS.sleep(10);
+            TimeUnit.MILLISECONDS.sleep(100);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        LoggedInActivity parent = (LoggedInActivity) getActivity();
-        parent.ButtonVisible();
-
+        System.out.println("TTTTT" + this._loggedInUser.get_userName());
         // Set the adapter
-        if (_currentView instanceof RecyclerView) {
+        if (this._rvList instanceof RecyclerView) {
             Context context = _currentView.getContext();
-            RecyclerView recyclerView = (RecyclerView) _currentView;
+
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                this._rvList.setLayoutManager(new LinearLayoutManager(context));
             } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+                this._rvList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new ListsRecyclerViewAdapter(this._loggedInUser.get_jobsList()));
+            this._rvList.setAdapter(new ListsRecyclerViewAdapter(this._loggedInUser.get_jobsList()));
         }
         return _currentView;
     }
