@@ -85,8 +85,6 @@ public class LoggedInActivity extends AppCompatActivity {
                 return new JobDetailFragment();
             case JobsListDetail:
                 return new ListDetailFragment();
-            case AddList:
-                return new AddListFragment();
             default:
                 return null;
         }
