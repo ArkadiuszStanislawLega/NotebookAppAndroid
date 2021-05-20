@@ -2,6 +2,7 @@ package com.example.android.notebookapplication;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.example.android.notebookapplication.models.JobsList;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
@@ -62,7 +65,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public int getItemCount() {
+        try {
             return _lists.size();
+        }catch (NullPointerException e){
+            Log.e(TAG, "getItemCount: ", e);
+            return 0;
+        }
 
     }
 

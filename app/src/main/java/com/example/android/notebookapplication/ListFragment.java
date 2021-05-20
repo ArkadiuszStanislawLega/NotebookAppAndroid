@@ -129,7 +129,7 @@ public class ListFragment extends Fragment {
         });
 
         try {
-            TimeUnit.MILLISECONDS.sleep(20);
+            TimeUnit.MILLISECONDS.sleep(400);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
