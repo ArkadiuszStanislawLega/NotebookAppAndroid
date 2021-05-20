@@ -36,6 +36,7 @@ public class JobFragment extends Fragment {
     private RecyclerView _rvList;
     private EditText _etJobName;
     private Button _bAddJob;
+
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
@@ -100,7 +101,7 @@ public class JobFragment extends Fragment {
                 _rvList.setAdapter(new JobsRecyclerViewAdapter(_jobs));
             }
         });
-        
+
         updateList();
         // Set the adapter
         if (this._rvList instanceof RecyclerView) {

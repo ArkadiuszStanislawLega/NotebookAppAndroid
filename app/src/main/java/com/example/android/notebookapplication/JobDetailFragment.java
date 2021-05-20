@@ -9,19 +9,25 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.notebookapplication.Database.NotebookDatabase;
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
+import com.example.android.notebookapplication.models.JobsList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 public class JobDetailFragment extends Fragment {
-
+     List<JobsList> _jls;
     private boolean _isEditModeOn = false;
     private Job _job;
     private View _currentView;
@@ -36,6 +42,7 @@ public class JobDetailFragment extends Fragment {
             _fabDelete,
             _fabConfirmEdit,
             _fabCancelEdit;
+    private NotebookDatabase _database;
 
     private LinearLayout _llEditButtons;
 
@@ -48,6 +55,7 @@ public class JobDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         this._currentView = inflater.inflate(R.layout.job_detail_fragment, container, false);
+        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
         try {
             this._job = (Job) getArguments().getSerializable("job");
             this.initControls();
@@ -98,22 +106,60 @@ public class JobDetailFragment extends Fragment {
                 Toast.makeText(_currentView.getContext(), "Job Delete", Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
                     showEditMode();
+
+                _database.getQueryExecutor().execute(() -> {
+                    _database.jobDAO().delete(_job);
+                    _jls = _database.jobsListDAO().getUserWithLists(LoggedInActivity.loggedInUser.getId());
+                });
+
+                for (JobsList jl : _jls){
+                    if (jl.get_jobsListId() == LoggedInActivity.listId) {
+                        LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
+                        loggedInActivity.changeContent(AppFragment.JobsListDetail, jl);
+                    }
+                }
             }
         });
 
         this._fabConfirmEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Job Confirm Edit", Toast.LENGTH_SHORT).show();
                 showEditMode();
+
+                _job.set_content(_etContent.getText().toString());
+                _job.set_title(_etTitle.getText().toString());
+                _job.set_edited(new Date());
+
+                _tvContent.setText(_job.get_content());
+                _tvTitle.setText(_job.get_title());
+
+                _database.getQueryExecutor().execute(() -> {
+                    _database.jobDAO().update(_job);
+                });
             }
         });
 
         this._fabCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Job Cancel Edit", Toast.LENGTH_SHORT).show();
+
                 showEditMode();
+
+                _etTitle.setText(_job.get_title());
+                _etContent.setText(_job.get_content());
+
+            }
+        });
+
+        this._sIsFinished.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                _job.set_isFinished(isChecked);
+                _job.set_edited(new Date());
+
+                _database.getQueryExecutor().execute(() -> {
+                    _database.jobDAO().update(_job);
+                });
             }
         });
     }
