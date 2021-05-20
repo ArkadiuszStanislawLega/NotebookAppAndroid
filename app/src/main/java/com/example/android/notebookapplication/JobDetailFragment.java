@@ -27,7 +27,10 @@ import java.util.Date;
 import java.util.List;
 
 public class JobDetailFragment extends Fragment {
-     List<JobsList> _jls;
+    private final String DATE_FORMAT =  "dd.MM.yyyy";
+    private final String TIME_FORMAT =  "HH:mm:ss";
+
+    private List<JobsList> _jls;
     private boolean _isEditModeOn = false;
     private Job _job;
     private View _currentView;
@@ -111,7 +114,7 @@ public class JobDetailFragment extends Fragment {
                     _database.jobDAO().delete(_job);
                     _jls = _database.jobsListDAO().getUserWithLists(LoggedInActivity.loggedInUser.getId());
                 });
-
+                //TODO: zwalidować to
                 for (JobsList jl : _jls){
                     if (jl.get_jobsListId() == LoggedInActivity.listId) {
                         LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
@@ -160,6 +163,11 @@ public class JobDetailFragment extends Fragment {
                 _database.getQueryExecutor().execute(() -> {
                     _database.jobDAO().update(_job);
                 });
+
+                SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+                String edited = formatter.format(_job.get_edited());
+
+                _tvEdited.setText(edited);
             }
         });
     }
@@ -185,9 +193,6 @@ public class JobDetailFragment extends Fragment {
     }
 
     private void setValuesToControls() {
-        String DATE_FORMAT = getString(R.string.date_format);
-        String TIME_FORMAT = getString(R.string.time_format);
-
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
         String edited = formatter.format(this._job.get_edited());
         String created = formatter.format(this._job.get_created());
