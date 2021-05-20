@@ -22,7 +22,8 @@ import static android.content.ContentValues.TAG;
  * TODO: Replace the implementation with code for your data type.
  */
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
-
+    private final String DATE_FORMAT = "dd.MM.yyyy";
+    private final String TIME_FORMAT = "HH:mm:ss";
     private final List<JobsList> _lists;
 
     public ListsRecyclerViewAdapter(List<JobsList> items) {
@@ -39,8 +40,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String DATE_FORMAT = "dd.MM.yyyy";
-        String TIME_FORMAT = "HH:mm:ss";
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
         String edited = formatter.format(this._lists.get(position).get_edited());
         String created = formatter.format(this._lists.get(position).get_created());

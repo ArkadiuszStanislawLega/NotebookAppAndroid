@@ -32,9 +32,9 @@ import java.util.concurrent.TimeUnit;
 public class ListFragment extends Fragment {
 
     private User _loggedInUser;
-    NotebookDatabase _database;
-    View _currentView;
-    RecyclerView _rvList;
+    private NotebookDatabase _database;
+    private View _currentView;
+    private RecyclerView _rvList;
     private Button _bAddList;
     private EditText _etListName;
 

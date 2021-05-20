@@ -2,6 +2,7 @@ package com.example.android.notebookapplication;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,8 @@ import java.util.List;
 
 
 public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerViewAdapter.ViewHolder> {
-
+    private final String DATE_FORMAT = "dd.MM.yyyy";
+    private final String TIME_FORMAT = "HH:mm:ss";
     private final List<Job> _jobs;
 
     public JobsRecyclerViewAdapter(List<Job> items) {
@@ -34,8 +36,6 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        String DATE_FORMAT = "dd.MM.yyyy";
-        String TIME_FORMAT = "HH:mm:ss";
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
         String edited = formatter.format(this._jobs.get(position).get_edited());
         String created = formatter.format(this._jobs.get(position).get_created());
@@ -55,6 +55,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
+                    LoggedInActivity.listId = _jobs.get(position).get_parentId();
                     LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
                     mainActivity.changeContent(AppFragment.JobDetail, _jobs.get(position));
                 }

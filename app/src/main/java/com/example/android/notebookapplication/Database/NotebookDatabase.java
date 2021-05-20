@@ -8,6 +8,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.example.android.notebookapplication.models.Job;
+import com.example.android.notebookapplication.models.JobDAO;
 import com.example.android.notebookapplication.models.JobsList;
 import com.example.android.notebookapplication.models.JobsListDAO;
 import com.example.android.notebookapplication.models.User;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 public abstract class NotebookDatabase extends RoomDatabase {
     public abstract UserDAO userDAO();
     public abstract JobsListDAO jobsListDAO();
+    public abstract JobDAO jobDAO();
 
     private static volatile NotebookDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

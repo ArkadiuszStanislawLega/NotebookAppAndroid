@@ -20,9 +20,13 @@ import com.example.android.notebookapplication.models.JobsList;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 
 public class ListDetailFragment extends Fragment {
+
+    private final String DATE_FORMAT =  "dd.MM.yyyy";
+    private final String TIME_FORMAT =  "HH:mm:ss";
+
     private boolean _isEditModeOn = false;
     private JobsList _jobsList;
     private TextView _tvListName,
@@ -36,7 +40,7 @@ public class ListDetailFragment extends Fragment {
             _fabCancelEdit;
     private LinearLayout _llEditButtons;
     private View _currentView;
-    NotebookDatabase _database;
+    private NotebookDatabase _database;
 
     public static ListDetailFragment newInstance() {
         return new ListDetailFragment();
@@ -88,24 +92,23 @@ public class ListDetailFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Job Added", Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
-                    showEditMode();
+                    switchEditMode();
             }
         });
 
         this._fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "List Edited", Toast.LENGTH_SHORT).show();
-                showEditMode();
+                switchEditMode();
             }
         });
 
         this._fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "List Delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(_currentView.getContext(), "Lista " + _tvListName.getText().toString() + " została usunięta."  , Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
-                    showEditMode();
+                    switchEditMode();
 
                 _database.getQueryExecutor().execute(() -> {
                     _database.jobsListDAO().delete(_jobsList);
@@ -118,20 +121,35 @@ public class ListDetailFragment extends Fragment {
         this._fabConfirmEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Confirm edit list", Toast.LENGTH_SHORT).show();
-                showEditMode();
+                switchEditMode();
+
+                _jobsList.set_name(_etListName.getText().toString());
+                _jobsList.set_edited(new Date());
+
+                SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+                String edited = formatter.format(_jobsList.get_edited());
+
+                _tvListName.setText(_jobsList.get_name());
+                _tvListEditedDate.setText(edited);
+
+                _database.getQueryExecutor().execute(() -> {
+                    _database.jobsListDAO().update(_jobsList);
+                });
             }
         });
         this._fabCancelEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(_currentView.getContext(), "Cancel edit list", Toast.LENGTH_SHORT).show();
-                showEditMode();
+
+                _tvListName.setText(_jobsList.get_name());
+                _etListName.setText(_jobsList.get_name());
+                switchEditMode();
             }
         });
     }
 
-    private void showEditMode() {
+    private void switchEditMode() {
         if (!_isEditModeOn) {
             this._llEditButtons.setVisibility(View.VISIBLE);
             this._etListName.setVisibility(View.VISIBLE);
@@ -147,9 +165,8 @@ public class ListDetailFragment extends Fragment {
         }
     }
 
+
     private void setValuesToControls() {
-        String DATE_FORMAT = getString(R.string.date_format);
-        String TIME_FORMAT = getString(R.string.time_format);
 
         SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
         String edited = formatter.format(_jobsList.get_edited());

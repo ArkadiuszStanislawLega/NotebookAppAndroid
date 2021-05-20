@@ -32,6 +32,7 @@ import java.util.List;
 public class LoggedInActivity extends AppCompatActivity {
 
     public static User loggedInUser;
+    public static long listId;
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
