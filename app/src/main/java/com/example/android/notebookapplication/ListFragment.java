@@ -30,7 +30,6 @@ import java.util.concurrent.TimeUnit;
  * A fragment representing a list of Items.
  */
 public class ListFragment extends Fragment {
-
     private User _loggedInUser;
     private NotebookDatabase _database;
     private View _currentView;

@@ -30,7 +30,8 @@ import java.util.List;
 
 
 public class LoggedInActivity extends AppCompatActivity {
-
+    public static final String DATE_FORMAT =  "dd.MM.yyyy";
+    public static final String TIME_FORMAT =  "HH:mm:ss";
     public static User loggedInUser;
     public static JobsList selectedJobsList;
     public static Job selectedJob;

@@ -23,10 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ListDetailFragment extends Fragment {
-
-    private final String DATE_FORMAT =  "dd.MM.yyyy";
-    private final String TIME_FORMAT =  "HH:mm:ss";
-
     private boolean _isEditModeOn = false;
     private JobsList _jobsList;
     private TextView _tvListName,
@@ -126,7 +122,7 @@ public class ListDetailFragment extends Fragment {
                 _jobsList.set_name(_etListName.getText().toString());
                 _jobsList.set_edited(new Date());
 
-                SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
                 String edited = formatter.format(_jobsList.get_edited());
 
                 _tvListName.setText(_jobsList.get_name());
@@ -168,7 +164,7 @@ public class ListDetailFragment extends Fragment {
 
     private void setValuesToControls() {
 
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
         String edited = formatter.format(_jobsList.get_edited());
         String created = formatter.format(_jobsList.get_created());
 

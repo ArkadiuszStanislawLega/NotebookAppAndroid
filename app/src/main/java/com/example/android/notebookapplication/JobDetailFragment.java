@@ -27,9 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 public class JobDetailFragment extends Fragment {
-    private final String DATE_FORMAT =  "dd.MM.yyyy";
-    private final String TIME_FORMAT =  "HH:mm:ss";
-
     private List<JobsList> _jls;
     private boolean _isEditModeOn = false;
     private Job _job;
@@ -160,7 +157,7 @@ public class JobDetailFragment extends Fragment {
                     _database.jobDAO().update(_job);
                 });
 
-                SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
                 String edited = formatter.format(_job.get_edited());
 
                 _tvEdited.setText(edited);
@@ -189,7 +186,7 @@ public class JobDetailFragment extends Fragment {
     }
 
     private void setValuesToControls() {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
         String edited = formatter.format(this._job.get_edited());
         String created = formatter.format(this._job.get_created());
 

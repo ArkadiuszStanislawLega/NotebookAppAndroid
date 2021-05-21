@@ -17,8 +17,6 @@ import java.util.List;
 
 
 public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerViewAdapter.ViewHolder> {
-    private final String DATE_FORMAT = "dd.MM.yyyy";
-    private final String TIME_FORMAT = "HH:mm:ss";
     private final List<Job> _jobs;
 
     public JobsRecyclerViewAdapter(List<Job> items) {
@@ -36,7 +34,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT + " " + TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
         String edited = formatter.format(this._jobs.get(position).get_edited());
         String created = formatter.format(this._jobs.get(position).get_created());
 
