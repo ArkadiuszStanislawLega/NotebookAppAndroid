@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.dummy.DummyContent.DummyItem;
+import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.text.SimpleDateFormat;
@@ -25,6 +27,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
     private final String DATE_FORMAT = "dd.MM.yyyy";
     private final String TIME_FORMAT = "HH:mm:ss";
     private final List<JobsList> _lists;
+    private NotebookDatabase _database;
 
     public ListsRecyclerViewAdapter(List<JobsList> items) {
         this._lists = items;
@@ -34,6 +37,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lists_item, parent, false);
+        this._database = NotebookDatabase.getDatabase(view.getContext());
 
         return new ViewHolder(view);
     }
@@ -55,8 +59,14 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
+                    LoggedInActivity.selectedJobsList = _lists.get(position);
+                    _database.getQueryExecutor().execute(() -> {
+                        List<Job> jobs = _database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
+                        LoggedInActivity.selectedJobsList.set_jobs(jobs);
+                    });
+
                     LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
-                    loggedInActivity.changeContent(AppFragment.JobsListDetail, _lists.get(position));
+                    loggedInActivity.changeContent(AppFragment.JobsListDetail);
                 }
             }
         });

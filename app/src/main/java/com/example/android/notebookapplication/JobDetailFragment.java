@@ -60,7 +60,7 @@ public class JobDetailFragment extends Fragment {
         this._currentView = inflater.inflate(R.layout.job_detail_fragment, container, false);
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
         try {
-            this._job = (Job) getArguments().getSerializable("job");
+            this._job = LoggedInActivity.selectedJob;
             this.initControls();
             this.setValuesToControls();
             this.setListeners();
@@ -115,12 +115,8 @@ public class JobDetailFragment extends Fragment {
                     _jls = _database.jobsListDAO().getUserWithLists(LoggedInActivity.loggedInUser.getId());
                 });
                 //TODO: zwalidować to
-                for (JobsList jl : _jls){
-                    if (jl.get_jobsListId() == LoggedInActivity.listId) {
-                        LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
-                        loggedInActivity.changeContent(AppFragment.JobsListDetail, jl);
-                    }
-                }
+                LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
+                loggedInActivity.changeContent(AppFragment.JobsListDetail);
             }
         });
 

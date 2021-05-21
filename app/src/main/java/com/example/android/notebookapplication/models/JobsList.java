@@ -3,6 +3,7 @@ package com.example.android.notebookapplication.models;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -31,6 +32,17 @@ public class JobsList implements Serializable {
             childColumns = "jobs_list_id",
             onDelete = CASCADE)
     private long _owner_id;
+
+    @Ignore
+    private List<Job> _jobs;
+
+    public List<Job> get_jobs() {
+        return _jobs;
+    }
+
+    public void set_jobs(List<Job> _jobs) {
+        this._jobs = _jobs;
+    }
 
     public String get_name() {
         return this._name;

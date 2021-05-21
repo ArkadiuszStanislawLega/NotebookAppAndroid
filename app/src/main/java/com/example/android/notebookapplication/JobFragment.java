@@ -85,6 +85,7 @@ public class JobFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Job job = new Job();
+                job.set_parentId(LoggedInActivity.selectedJobsList.get_jobsListId());
                 job.set_title(_etJobName.getText().toString());
                 job.set_created(new Date());
                 job.set_edited(new Date());
@@ -94,8 +95,9 @@ public class JobFragment extends Fragment {
                 });
                 _etJobName.getText().clear();
                 updateList();
+
                 _database.getQueryExecutor().execute(() -> {
-                    _jobs = _database.jobDAO().getJobsList(LoggedInActivity.listId);
+                    _jobs = _database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
                 });
 
                 _rvList.setAdapter(new JobsRecyclerViewAdapter(_jobs));
@@ -120,7 +122,7 @@ public class JobFragment extends Fragment {
     private void updateList(){
         this._database.getQueryExecutor().execute(() -> {
             this._loggedInUser.set_jobsList(null);
-            _jobs = this._database.jobDAO().getJobsList(LoggedInActivity.listId);
+            _jobs = this._database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
         });
 
         try {

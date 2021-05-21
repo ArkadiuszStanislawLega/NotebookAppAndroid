@@ -53,7 +53,7 @@ public class ListDetailFragment extends Fragment {
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
         try {
-            this._jobsList = (JobsList) getArguments().getSerializable("list");
+            this._jobsList = LoggedInActivity.selectedJobsList;
             this.initControls();
             this.setValuesToControls();
             this.setListeners();
@@ -115,7 +115,7 @@ public class ListDetailFragment extends Fragment {
                 });
 
                 LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
-                loggedInActivity.changeContent(AppFragment.JobsList, null);
+                loggedInActivity.changeContent(AppFragment.JobsList);
             }
         });
         this._fabConfirmEdit.setOnClickListener(new View.OnClickListener() {

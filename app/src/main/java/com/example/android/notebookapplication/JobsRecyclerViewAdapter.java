@@ -55,9 +55,10 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
-                    LoggedInActivity.listId = _jobs.get(position).get_parentId();
+                    LoggedInActivity.selectedJob = _jobs.get(position);
+
                     LoggedInActivity mainActivity = (LoggedInActivity) view.getContext();
-                    mainActivity.changeContent(AppFragment.JobDetail, _jobs.get(position));
+                    mainActivity.changeContent(AppFragment.JobDetail);
                 }
             }
         });

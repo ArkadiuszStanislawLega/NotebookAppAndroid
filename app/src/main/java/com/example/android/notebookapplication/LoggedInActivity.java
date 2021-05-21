@@ -32,7 +32,8 @@ import java.util.List;
 public class LoggedInActivity extends AppCompatActivity {
 
     public static User loggedInUser;
-    public static long listId;
+    public static JobsList selectedJobsList;
+    public static Job selectedJob;
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
@@ -58,7 +59,7 @@ public class LoggedInActivity extends AppCompatActivity {
         this.initControls();
         this.initListeners();
 
-        this.changeContent(AppFragment.JobsList, null);
+        this.changeContent(AppFragment.JobsList);
 
         Toast.makeText(this, "Witaj " + this.loggedInUser.get_userName() + "!", Toast.LENGTH_SHORT).show();
 
@@ -91,22 +92,9 @@ public class LoggedInActivity extends AppCompatActivity {
         }
     }
 
-    private Bundle dataForFragment(AppFragment appFragment, Object obj){
-        Bundle bundle = new Bundle();
-        if (appFragment == AppFragment.JobsListDetail)
-            bundle.putSerializable("list", (JobsList) obj);
-
-        if (appFragment == AppFragment.JobDetail)
-            bundle.putSerializable("job", (Job)obj);
-
-        return bundle;
-    }
-
-    public void changeContent(AppFragment appFragment, Object obj){
+    public void changeContent(AppFragment appFragment){
         Fragment instance = this.selectFragment(appFragment);
         if(instance != null) {
-            instance.setArguments(this.dataForFragment(appFragment, obj));
-
             this._fragmentTransaction = this._fragmentManager.beginTransaction();
 
             if (this.currentFragment == null)
