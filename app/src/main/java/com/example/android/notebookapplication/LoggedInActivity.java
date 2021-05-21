@@ -32,9 +32,11 @@ import java.util.List;
 public class LoggedInActivity extends AppCompatActivity {
     public static final String DATE_FORMAT =  "dd.MM.yyyy";
     public static final String TIME_FORMAT =  "HH:mm:ss";
+
     public static User loggedInUser;
     public static JobsList selectedJobsList;
     public static Job selectedJob;
+
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
@@ -45,7 +47,6 @@ public class LoggedInActivity extends AppCompatActivity {
     @Override
     public void onActivityReenter(int resultCode, Intent data) {
         super.onActivityReenter(resultCode, data);
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

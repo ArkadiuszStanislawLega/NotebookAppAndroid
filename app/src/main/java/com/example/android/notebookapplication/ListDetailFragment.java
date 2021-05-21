@@ -29,8 +29,7 @@ public class ListDetailFragment extends Fragment {
             _tvListEditedDate,
             _tvListCreatedDate;
     private EditText _etListName;
-    private FloatingActionButton _fabAdd,
-            _fabEdit,
+    private FloatingActionButton  _fabEdit,
             _fabDelete,
             _fabConfirmEdit,
             _fabCancelEdit;
@@ -74,7 +73,6 @@ public class ListDetailFragment extends Fragment {
         this._tvListCreatedDate = this._currentView.findViewById(R.id.list_created_date);
         this._tvListEditedDate = this._currentView.findViewById(R.id.list_edited_date);
         this._etListName = this._currentView.findViewById(R.id.et_list_name);
-        this._fabAdd = this._currentView.findViewById(R.id.add_job);
         this._fabEdit = this._currentView.findViewById(R.id.edit_list);
         this._fabDelete = this._currentView.findViewById(R.id.delete_list);
         this._fabConfirmEdit = this._currentView.findViewById(R.id.button_confirm_edit);
@@ -83,15 +81,6 @@ public class ListDetailFragment extends Fragment {
     }
 
     private void setListeners() {
-        this._fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Job Added", Toast.LENGTH_SHORT).show();
-                if (_isEditModeOn)
-                    switchEditMode();
-            }
-        });
-
         this._fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -163,7 +152,6 @@ public class ListDetailFragment extends Fragment {
 
 
     private void setValuesToControls() {
-
         SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
         String edited = formatter.format(_jobsList.get_edited());
         String created = formatter.format(_jobsList.get_created());

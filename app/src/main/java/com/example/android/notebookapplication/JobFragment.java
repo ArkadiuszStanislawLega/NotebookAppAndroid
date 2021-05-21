@@ -76,10 +76,30 @@ public class JobFragment extends Fragment {
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
         this._loggedInUser = LoggedInActivity.loggedInUser;
 
+        initControls();
+        initListener();
+        updateList();
+
+        if (this._rvList instanceof RecyclerView) {
+            Context context = this._currentView.getContext();
+
+            if (mColumnCount <= 1) {
+                this._rvList.setLayoutManager(new LinearLayoutManager(context));
+            } else {
+                this._rvList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+            }
+            this._rvList.setAdapter(new JobsRecyclerViewAdapter(this._jobs));
+        }
+        return this._currentView;
+    }
+
+    private void initControls(){
         this._rvList = this._currentView.findViewById(R.id.list);
         this._etJobName = this._currentView.findViewById(R.id.et_title_job);
         this._bAddJob = this._currentView.findViewById(R.id.b_add_new_job);
+    }
 
+    private void initListener(){
         this._bAddJob.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -103,20 +123,6 @@ public class JobFragment extends Fragment {
                 _rvList.setAdapter(new JobsRecyclerViewAdapter(_jobs));
             }
         });
-
-        updateList();
-        // Set the adapter
-        if (this._rvList instanceof RecyclerView) {
-            Context context = this._currentView.getContext();
-
-            if (mColumnCount <= 1) {
-                this._rvList.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                this._rvList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            this._rvList.setAdapter(new JobsRecyclerViewAdapter(this._jobs));
-        }
-        return this._currentView;
     }
 
     private void updateList(){

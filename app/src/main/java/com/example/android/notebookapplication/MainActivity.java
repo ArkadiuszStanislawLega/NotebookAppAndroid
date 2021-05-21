@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
-
     private User _loggedInUser;
     private EditText _etLogin, _etPass;
     private Button _bLogin, _bRegister;

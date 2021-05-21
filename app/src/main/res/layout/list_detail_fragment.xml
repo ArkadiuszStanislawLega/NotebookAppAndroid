@@ -92,12 +92,6 @@
         android:orientation="vertical"
         android:layout_gravity="right|bottom">
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:src="@drawable/ic_add"
-            android:id="@+id/add_job"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/edit_list"
             android:src="@drawable/ic_edit"
             android:layout_marginBottom="10dp"

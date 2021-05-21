@@ -27,7 +27,6 @@ import java.util.Date;
 import java.util.List;
 
 public class JobDetailFragment extends Fragment {
-    private List<JobsList> _jls;
     private boolean _isEditModeOn = false;
     private Job _job;
     private View _currentView;
@@ -56,15 +55,11 @@ public class JobDetailFragment extends Fragment {
 
         this._currentView = inflater.inflate(R.layout.job_detail_fragment, container, false);
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
-        try {
-            this._job = LoggedInActivity.selectedJob;
-            this.initControls();
-            this.setValuesToControls();
-            this.setListeners();
 
-        } catch (NullPointerException e) {
-            System.out.println(e);
-        }
+        this._job = LoggedInActivity.selectedJob;
+        this.initControls();
+        this.setValuesToControls();
+        this.setListeners();
 
         return this._currentView;
     }
@@ -95,7 +90,6 @@ public class JobDetailFragment extends Fragment {
         this._fabEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Job Edited", Toast.LENGTH_SHORT).show();
                 showEditMode();
             }
         });
@@ -103,15 +97,17 @@ public class JobDetailFragment extends Fragment {
         this._fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Job Delete", Toast.LENGTH_SHORT).show();
+                Toast.makeText(_currentView.getContext(), "Usunięto zadanie: " + _job.get_title(), Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
                     showEditMode();
 
+                LoggedInActivity.selectedJobsList.set_edited(new Date());
+
                 _database.getQueryExecutor().execute(() -> {
                     _database.jobDAO().delete(_job);
-                    _jls = _database.jobsListDAO().getUserWithLists(LoggedInActivity.loggedInUser.getId());
+                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
                 });
-                //TODO: zwalidować to
+
                 LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
                 loggedInActivity.changeContent(AppFragment.JobsListDetail);
             }
@@ -125,13 +121,19 @@ public class JobDetailFragment extends Fragment {
                 _job.set_content(_etContent.getText().toString());
                 _job.set_title(_etTitle.getText().toString());
                 _job.set_edited(new Date());
-
-                _tvContent.setText(_job.get_content());
-                _tvTitle.setText(_job.get_title());
+                LoggedInActivity.selectedJobsList.set_edited(new Date());
 
                 _database.getQueryExecutor().execute(() -> {
                     _database.jobDAO().update(_job);
+                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
                 });
+
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+                String edited = formatter.format(_job.get_edited());
+
+                _tvContent.setText(_job.get_content());
+                _tvTitle.setText(_job.get_title());
+                _tvEdited.setText(edited);
             }
         });
 
@@ -143,7 +145,6 @@ public class JobDetailFragment extends Fragment {
 
                 _etTitle.setText(_job.get_title());
                 _etContent.setText(_job.get_content());
-
             }
         });
 
@@ -154,6 +155,9 @@ public class JobDetailFragment extends Fragment {
                 _job.set_edited(new Date());
 
                 _database.getQueryExecutor().execute(() -> {
+                    LoggedInActivity.selectedJobsList.set_edited(new Date());
+
+                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
                     _database.jobDAO().update(_job);
                 });
 
