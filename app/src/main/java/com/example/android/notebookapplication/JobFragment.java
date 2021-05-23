@@ -30,8 +30,7 @@ import java.util.concurrent.TimeUnit;
  * A fragment representing a list of Items.
  */
 public class JobFragment extends Fragment {
-    private User _loggedInUser;
-    private NotebookDatabase _database;
+
     private View _currentView;
     private RecyclerView _rvList;
     private EditText _etJobName;
@@ -41,8 +40,6 @@ public class JobFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
-
-    private List<Job> _jobs;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -73,12 +70,9 @@ public class JobFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this._currentView = inflater.inflate(R.layout.jobs_fragment, container, false);
-        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
-        this._loggedInUser = LoggedInActivity.loggedInUser;
 
         initControls();
         initListener();
-        updateList();
 
         if (this._rvList instanceof RecyclerView) {
             Context context = this._currentView.getContext();
@@ -88,7 +82,7 @@ public class JobFragment extends Fragment {
             } else {
                 this._rvList.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            this._rvList.setAdapter(new JobsRecyclerViewAdapter(this._jobs));
+            this._rvList.setAdapter(new JobsRecyclerViewAdapter(LoggedInActivity.viewModel.getSelectedList().get_jobs()));
         }
         return this._currentView;
     }
@@ -104,37 +98,17 @@ public class JobFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                Job job = new Job();
-                job.set_parentId(LoggedInActivity.selectedJobsList.get_jobsListId());
-                job.set_title(_etJobName.getText().toString());
-                job.set_created(new Date());
-                job.set_edited(new Date());
+                if (!_etJobName.getText().toString().equals("")) {
+                    Job job = new Job();
+                    job.set_title(_etJobName.getText().toString());
 
-                _database.getQueryExecutor().execute(() -> {
-                    _database.jobDAO().insert(job);
-                });
-                _etJobName.getText().clear();
-                updateList();
+                    LoggedInActivity.viewModel.addJob(job);
 
-                _database.getQueryExecutor().execute(() -> {
-                    _jobs = _database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
-                });
+                    _rvList.setAdapter(new JobsRecyclerViewAdapter(LoggedInActivity.viewModel.getSelectedList().get_jobs()));
 
-                _rvList.setAdapter(new JobsRecyclerViewAdapter(_jobs));
+                    _etJobName.getText().clear();
+                }
             }
         });
-    }
-
-    private void updateList(){
-        this._database.getQueryExecutor().execute(() -> {
-            this._loggedInUser.set_jobsList(null);
-            _jobs = this._database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
-        });
-
-        try {
-            TimeUnit.MILLISECONDS.sleep(400);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }

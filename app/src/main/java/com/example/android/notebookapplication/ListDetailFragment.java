@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.JobsList;
+import com.example.android.notebookapplication.models.ListsViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -48,7 +50,7 @@ public class ListDetailFragment extends Fragment {
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
         try {
-            this._jobsList = LoggedInActivity.selectedJobsList;
+            this._jobsList = LoggedInActivity.viewModel.getSelectedList();
             this.initControls();
             this.setValuesToControls();
             this.setListeners();
@@ -95,9 +97,7 @@ public class ListDetailFragment extends Fragment {
                 if (_isEditModeOn)
                     switchEditMode();
 
-                _database.getQueryExecutor().execute(() -> {
-                    _database.jobsListDAO().delete(_jobsList);
-                });
+                LoggedInActivity.viewModel.removeList();
 
                 LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
                 loggedInActivity.changeContent(AppFragment.JobsList);

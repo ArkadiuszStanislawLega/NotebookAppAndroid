@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,6 @@ import java.util.List;
 
 public class JobDetailFragment extends Fragment {
     private boolean _isEditModeOn = false;
-    private Job _job;
     private View _currentView;
     private TextView _tvTitle,
             _tvContent,
@@ -41,7 +41,6 @@ public class JobDetailFragment extends Fragment {
             _fabDelete,
             _fabConfirmEdit,
             _fabCancelEdit;
-    private NotebookDatabase _database;
 
     private LinearLayout _llEditButtons;
 
@@ -54,12 +53,12 @@ public class JobDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         this._currentView = inflater.inflate(R.layout.job_detail_fragment, container, false);
-        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
-        this._job = LoggedInActivity.selectedJob;
-        this.initControls();
-        this.setValuesToControls();
-        this.setListeners();
+        if (LoggedInActivity.viewModel.getSelectedJob() != null) {
+            this.initControls();
+            this.setValuesToControls();
+            this.setListeners();
+        }
 
         return this._currentView;
     }
@@ -97,16 +96,11 @@ public class JobDetailFragment extends Fragment {
         this._fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Usunięto zadanie: " + _job.get_title(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(_currentView.getContext(), "Usunięto zadanie: " + LoggedInActivity.viewModel.getSelectedJob().get_title(), Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
                     showEditMode();
 
-                LoggedInActivity.selectedJobsList.set_edited(new Date());
-
-                _database.getQueryExecutor().execute(() -> {
-                    _database.jobDAO().delete(_job);
-                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
-                });
+                LoggedInActivity.viewModel.removeJob();
 
                 LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
                 loggedInActivity.changeContent(AppFragment.JobsListDetail);
@@ -118,21 +112,16 @@ public class JobDetailFragment extends Fragment {
             public void onClick(View view) {
                 showEditMode();
 
-                _job.set_content(_etContent.getText().toString());
-                _job.set_title(_etTitle.getText().toString());
-                _job.set_edited(new Date());
-                LoggedInActivity.selectedJobsList.set_edited(new Date());
+                LoggedInActivity.viewModel.getSelectedJob().set_content(_etContent.getText().toString());
+                LoggedInActivity.viewModel.getSelectedJob().set_title(_etTitle.getText().toString());
 
-                _database.getQueryExecutor().execute(() -> {
-                    _database.jobDAO().update(_job);
-                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
-                });
+                LoggedInActivity.viewModel.updateJob();
 
                 SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
-                String edited = formatter.format(_job.get_edited());
+                String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
 
-                _tvContent.setText(_job.get_content());
-                _tvTitle.setText(_job.get_title());
+                _tvContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
+                _tvTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
                 _tvEdited.setText(edited);
             }
         });
@@ -143,26 +132,20 @@ public class JobDetailFragment extends Fragment {
 
                 showEditMode();
 
-                _etTitle.setText(_job.get_title());
-                _etContent.setText(_job.get_content());
+                _etTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
+                _etContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
             }
         });
 
         this._sIsFinished.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                _job.set_isFinished(isChecked);
-                _job.set_edited(new Date());
+                LoggedInActivity.viewModel.getSelectedJob().set_isFinished(isChecked);
 
-                _database.getQueryExecutor().execute(() -> {
-                    LoggedInActivity.selectedJobsList.set_edited(new Date());
-
-                    _database.jobsListDAO().update(LoggedInActivity.selectedJobsList);
-                    _database.jobDAO().update(_job);
-                });
+                LoggedInActivity.viewModel.updateJob();
 
                 SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
-                String edited = formatter.format(_job.get_edited());
+                String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
 
                 _tvEdited.setText(edited);
             }
@@ -190,17 +173,19 @@ public class JobDetailFragment extends Fragment {
     }
 
     private void setValuesToControls() {
-        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
-        String edited = formatter.format(this._job.get_edited());
-        String created = formatter.format(this._job.get_created());
+        if (LoggedInActivity.viewModel.getSelectedJob() != null) {
+            SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+            String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
+            String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created());
 
-        this._etTitle.setText(this._job.get_title());
-        this._etContent.setText(this._job.get_content());
-        this._tvTitle.setText(this._job.get_title());
-        this._tvContent.setText(this._job.get_content());
-        this._tvCreated.setText(created);
-        this._tvEdited.setText(edited);
-        this._sIsFinished.setChecked(this._job.is_isFinished());
+            this._etTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
+            this._etContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
+            this._tvTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
+            this._tvContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
+            this._tvCreated.setText(created);
+            this._tvEdited.setText(edited);
+            this._sIsFinished.setChecked(LoggedInActivity.viewModel.getSelectedJob().is_isFinished());
+        }
     }
 
 }

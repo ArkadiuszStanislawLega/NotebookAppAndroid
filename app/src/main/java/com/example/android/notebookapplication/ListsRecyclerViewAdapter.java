@@ -57,11 +57,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
-                    LoggedInActivity.selectedJobsList = _lists.get(position);
-                    _database.getQueryExecutor().execute(() -> {
-                        List<Job> jobs = _database.jobDAO().getJobsList(LoggedInActivity.selectedJobsList.get_jobsListId());
-                        LoggedInActivity.selectedJobsList.set_jobs(jobs);
-                    });
+                    LoggedInActivity.viewModel.setSelectedList(position);
 
                     LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
                     loggedInActivity.changeContent(AppFragment.JobsListDetail);

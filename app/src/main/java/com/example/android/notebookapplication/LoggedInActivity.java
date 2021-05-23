@@ -22,6 +22,7 @@ import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
+import com.example.android.notebookapplication.models.ListsViewModel;
 import com.example.android.notebookapplication.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -34,14 +35,15 @@ public class LoggedInActivity extends AppCompatActivity {
     public static final String TIME_FORMAT =  "HH:mm:ss";
 
     public static User loggedInUser;
-    public static JobsList selectedJobsList;
-    public static Job selectedJob;
+    public static final ListsViewModel viewModel = new ListsViewModel();
 
     private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
     private AppFragment currentFragment;
     private Button _bLogout;
+
+    private NotebookDatabase _database;
 
 
     @Override
@@ -56,7 +58,13 @@ public class LoggedInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_logged_in);
 
         this.loggedInUser = (User)getIntent().getSerializableExtra("user");
+        this._database = NotebookDatabase.getDatabase(getApplicationContext());
+
+        viewModel.setDatabase(this._database);
+        viewModel.setUserId(loggedInUser.get_userId());
+
         this._fragmentManager = getSupportFragmentManager();
+
 
         this.initControls();
         this.initListeners();
