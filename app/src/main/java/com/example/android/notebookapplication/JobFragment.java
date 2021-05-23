@@ -1,13 +1,10 @@
 package com.example.android.notebookapplication;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -16,15 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.models.Job;
-import com.example.android.notebookapplication.models.JobsList;
-import com.example.android.notebookapplication.models.User;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class JobFragment extends Fragment {
 

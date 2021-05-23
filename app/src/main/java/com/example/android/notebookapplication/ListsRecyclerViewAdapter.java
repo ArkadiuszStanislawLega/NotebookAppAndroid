@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
-import com.example.android.notebookapplication.dummy.DummyContent.DummyItem;
-import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.text.SimpleDateFormat;
@@ -19,10 +17,6 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private final List<JobsList> _lists;
     private NotebookDatabase _database;

@@ -3,11 +3,8 @@ package com.example.android.notebookapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,7 +13,6 @@ import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.databinding.ActivityMainBinding;
 import com.example.android.notebookapplication.models.User;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
