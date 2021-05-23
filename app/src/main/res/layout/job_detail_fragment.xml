@@ -26,7 +26,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="@dimen/list_item_normal"
                 android:textColor="@color/active"
-                android:text="Name"/>
+                android:text="@string/empty_field"/>
             <EditText
                 android:id="@+id/et_job_title"
                 android:visibility="gone"
@@ -71,7 +71,7 @@
                 android:layout_gravity="left"
                 android:textSize="@dimen/list_item_normal"
                 android:textColor="@color/active"
-                android:text="Created date"/>
+                android:text="@string/empty_field"/>
             <TextView
                 android:id="@+id/job_edited_date"
                 android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
                 android:layout_gravity="right"
                 android:textSize="@dimen/list_item_normal"
                 android:textColor="@color/active"
-                android:text="Edited Date"/>
+                android:text="@string/empty_field"/>
         </GridLayout>
         <TextView
             android:layout_width="wrap_content"

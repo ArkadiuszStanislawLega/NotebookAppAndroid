@@ -168,19 +168,16 @@ public class JobDetailFragment extends Fragment {
     }
 
     private void setValuesToControls() {
-        if (LoggedInActivity.viewModel.getSelectedJob() != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
-            String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
-            String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created());
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+        String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
+        String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created());
 
-            this._etTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
-            this._etContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
-            this._tvTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
-            this._tvContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
-            this._tvCreated.setText(created);
-            this._tvEdited.setText(edited);
-            this._sIsFinished.setChecked(LoggedInActivity.viewModel.getSelectedJob().is_isFinished());
-        }
+        this._etTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
+        this._etContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
+        this._tvTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
+        this._tvContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
+        this._tvCreated.setText(created);
+        this._tvEdited.setText(edited);
+        this._sIsFinished.setChecked(LoggedInActivity.viewModel.getSelectedJob().is_isFinished());
     }
-
 }

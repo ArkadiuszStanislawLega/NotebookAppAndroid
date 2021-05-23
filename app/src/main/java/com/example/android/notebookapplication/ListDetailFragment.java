@@ -47,25 +47,18 @@ public class ListDetailFragment extends Fragment {
         this._currentView = inflater.inflate(R.layout.list_detail_fragment, container, false);
         this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
-        try {
-            this._jobsList = LoggedInActivity.viewModel.getSelectedList();
+        this._jobsList = LoggedInActivity.viewModel.getSelectedList();
+        if (this._jobsList != null) {
             this.initControls();
             this.setValuesToControls();
             this.setListeners();
-
-        } catch (NullPointerException e) {
-            System.out.println(e);
         }
-
         return _currentView;
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(JobsListDetailViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     private void initControls() {
