@@ -102,7 +102,7 @@ public class ListDetailFragment extends Fragment {
                 _jobsList.set_name(_etListName.getText().toString());
                 _jobsList.set_edited(new Date());
 
-                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
                 String edited = formatter.format(_jobsList.get_edited());
 
                 _tvListName.setText(_jobsList.get_name());
@@ -143,7 +143,7 @@ public class ListDetailFragment extends Fragment {
 
 
     private void setValuesToControls() {
-        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
         String edited = formatter.format(_jobsList.get_edited());
         String created = formatter.format(_jobsList.get_created());
 

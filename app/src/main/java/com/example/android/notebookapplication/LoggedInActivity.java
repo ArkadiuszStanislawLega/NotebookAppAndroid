@@ -24,11 +24,11 @@ import java.util.List;
 public class LoggedInActivity extends AppCompatActivity {
     public static final String DATE_FORMAT =  "dd.MM.yyyy";
     public static final String TIME_FORMAT =  "HH:mm:ss";
+    public static final String DATE_TIME_FORMAT = DATE_FORMAT + " " + TIME_FORMAT;
 
     public static User loggedInUser;
     public static final ListsViewModel viewModel = new ListsViewModel();
 
-    private FrameLayout _mainContent;
     private FragmentTransaction _fragmentTransaction;
     private FragmentManager _fragmentManager;
     private AppFragment currentFragment;
@@ -111,6 +111,5 @@ public class LoggedInActivity extends AppCompatActivity {
 
     private void initControls(){
         this._bLogout = findViewById(R.id.btnLogout);
-        this._mainContent = findViewById(R.id.main_content);
     }
 }

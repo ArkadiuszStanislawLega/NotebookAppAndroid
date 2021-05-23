@@ -2,6 +2,7 @@ package com.example.android.notebookapplication;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.example.android.notebookapplication.models.Job;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 
 public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerViewAdapter.ViewHolder> {
@@ -33,7 +36,7 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
         String edited = formatter.format(this._jobs.get(position).get_edited());
         String created = formatter.format(this._jobs.get(position).get_created());
 
@@ -62,10 +65,12 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
 
     @Override
     public int getItemCount() {
-        if (this._jobs != null)
+        try {
             return _jobs.size();
-
-        return 0;
+        }catch (NullPointerException e){
+            Log.e(TAG, "getItemCount: ", e);
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

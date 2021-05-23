@@ -61,8 +61,6 @@ public class JobDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-//        mViewModel = new ViewModelProvider(this).get(JobViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     private void initControls() {
@@ -91,7 +89,8 @@ public class JobDetailFragment extends Fragment {
         this._fabDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(_currentView.getContext(), "Usunięto zadanie: " + LoggedInActivity.viewModel.getSelectedJob().get_title(), Toast.LENGTH_SHORT).show();
+                String title = LoggedInActivity.viewModel.getSelectedJob().get_title();
+                Toast.makeText(_currentView.getContext(), "Usunięto zadanie: " + title, Toast.LENGTH_SHORT).show();
                 if (_isEditModeOn)
                     showEditMode();
 
@@ -112,7 +111,7 @@ public class JobDetailFragment extends Fragment {
 
                 LoggedInActivity.viewModel.updateJob();
 
-                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
                 String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
 
                 _tvContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
@@ -139,7 +138,7 @@ public class JobDetailFragment extends Fragment {
 
                 LoggedInActivity.viewModel.updateJob();
 
-                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+                SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
                 String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
 
                 _tvEdited.setText(edited);
@@ -168,7 +167,7 @@ public class JobDetailFragment extends Fragment {
     }
 
     private void setValuesToControls() {
-        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
         String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
         String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created());
 

@@ -36,7 +36,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_FORMAT + " " + LoggedInActivity.TIME_FORMAT);
+        SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
         String edited = formatter.format(this._lists.get(position).get_edited());
         String created = formatter.format(this._lists.get(position).get_created());
 
@@ -68,7 +68,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             Log.e(TAG, "getItemCount: ", e);
             return 0;
         }
-
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
