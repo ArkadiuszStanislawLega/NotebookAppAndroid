@@ -112,8 +112,9 @@ public class ListsViewModel extends ViewModel {
         if (this._selectedList != null && this._database != null) {
             _database.getQueryExecutor().execute(() -> {
                 _database.jobsListDAO().delete(this._selectedList);
+                this._selectedList = null;
             });
-            this._selectedJob = null;
+
             loadLists();
         }
     }

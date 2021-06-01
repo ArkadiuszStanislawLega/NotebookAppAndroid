@@ -54,6 +54,10 @@ public class JobDetailFragment extends Fragment {
             this.setValuesToControls();
             this.setListeners();
         }
+        else{
+            LoggedInActivity loggedInActivity = (LoggedInActivity) this._currentView.getContext();
+            loggedInActivity.changeContent(AppFragment.JobsList);
+        }
 
         return this._currentView;
     }

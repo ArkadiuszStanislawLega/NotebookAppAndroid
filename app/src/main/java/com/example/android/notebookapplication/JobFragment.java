@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
 
 public class JobFragment extends Fragment {
@@ -40,11 +41,17 @@ public class JobFragment extends Fragment {
                              Bundle savedInstanceState) {
         this._currentView = inflater.inflate(R.layout.jobs_fragment, container, false);
 
-        initControls();
-        initListener();
+        if (LoggedInActivity.viewModel.getSelectedList() != null) {
+            initControls();
+            initListener();
 
-        if (this._rvList instanceof RecyclerView) {
-            this._rvList.setAdapter(new JobsRecyclerViewAdapter(LoggedInActivity.viewModel.getSelectedList().get_jobs()));
+            if (this._rvList instanceof RecyclerView) {
+                this._rvList.setAdapter(new JobsRecyclerViewAdapter(LoggedInActivity.viewModel.getSelectedList().get_jobs()));
+            }
+        }
+        else{
+            LoggedInActivity loggedInActivity = (LoggedInActivity) this._currentView.getContext();
+            loggedInActivity.changeContent(AppFragment.JobsList);
         }
         return this._currentView;
     }
