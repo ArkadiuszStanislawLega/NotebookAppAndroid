@@ -3,11 +3,16 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "Jobs")
 public class Job implements Serializable {
+    @SerializedName("id")
+    @Expose
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "job_id")
     private int _jobId;
@@ -18,15 +23,21 @@ public class Job implements Serializable {
     @ColumnInfo(name = "edited")
     private Date _edited;
 
+    @SerializedName("title")
+    @Expose
     @ColumnInfo(name = "title")
     private String _title;
 
     @ColumnInfo(name = "content")
     private String _content;
 
+    @SerializedName("completed")
+    @Expose
     @ColumnInfo(name = "is_finished")
     private boolean _isFinished;
 
+    @SerializedName("userId")
+    @Expose
     @ColumnInfo(name = "jobs_list_id")
     private long _parentId;
 

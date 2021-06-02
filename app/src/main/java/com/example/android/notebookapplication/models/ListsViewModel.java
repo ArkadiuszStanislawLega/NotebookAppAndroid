@@ -1,5 +1,7 @@
 package com.example.android.notebookapplication.models;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ListsViewModel extends ViewModel {
+    private static final String TAG = "ListsViewModel";
     private final int DATABASE_TIMEOUT = 100;
     private long _userId;
 
@@ -28,9 +31,14 @@ public class ListsViewModel extends ViewModel {
         this.getLists();
     }
 
-    public void setSelectedList(int i) {
-        this._selectedList = this._lists.getValue().get(i);
-        loadJobs();
+    public void setSelectedList(int i, List<Job> jobs) {
+        if (jobs == null) {
+            this._selectedList = this._lists.getValue().get(i);
+            loadJobs();
+        }else{
+            this._selectedList = this._lists.getValue().get(i);
+            this._selectedList.set_jobs(jobs);
+        }
     }
 
     public void setSelectedJob(int i){
@@ -69,7 +77,7 @@ public class ListsViewModel extends ViewModel {
     private void loadLists(){
         if (this._userId > 0 && this._database != null) {
             this._database.getQueryExecutor().execute(() -> {
-                _tempList = this._database.jobsListDAO().getUserWithLists(this._userId);
+                this._tempList = this._database.jobsListDAO().getUserWithLists(this._userId);
             });
             try {
                 TimeUnit.MILLISECONDS.sleep(DATABASE_TIMEOUT);
@@ -84,7 +92,7 @@ public class ListsViewModel extends ViewModel {
         if (this._selectedList != null && this._database != null) {
             this._selectedList.set_jobs(null);
             this._database.getQueryExecutor().execute(() -> {
-                _tempJobs = this._database.jobDAO().getJobsList(this._selectedList.get_jobsListId());
+                this._tempJobs = this._database.jobDAO().getJobsList(this._selectedList.get_jobsListId());
             });
             try {
                 TimeUnit.MILLISECONDS.sleep(DATABASE_TIMEOUT);
@@ -110,8 +118,8 @@ public class ListsViewModel extends ViewModel {
 
     public void removeList(){
         if (this._selectedList != null && this._database != null) {
-            _database.getQueryExecutor().execute(() -> {
-                _database.jobsListDAO().delete(this._selectedList);
+            this._database.getQueryExecutor().execute(() -> {
+                this._database.jobsListDAO().delete(this._selectedList);
                 this._selectedList = null;
             });
 
@@ -141,13 +149,13 @@ public class ListsViewModel extends ViewModel {
         if (this._selectedJob != null && this._selectedList != null && this._database != null) {
             this._selectedList.set_edited(new Date());
 
-            _database.getQueryExecutor().execute(() -> {
-                _database.jobDAO().delete(this._selectedJob);
-                _database.jobsListDAO().update(this._selectedList);
+            this._database.getQueryExecutor().execute(() -> {
+                this._database.jobDAO().delete(this._selectedJob);
+                this._database.jobsListDAO().update(this._selectedList);
+                this._selectedJob = null;
             });
             loadLists();
             loadJobs();
-            this._selectedJob = null;
         }
     }
 
@@ -156,9 +164,9 @@ public class ListsViewModel extends ViewModel {
             this._selectedList.set_edited(new Date());
             this._selectedJob.set_edited(new Date());
 
-            _database.getQueryExecutor().execute(() -> {
-                _database.jobDAO().update(this._selectedJob);
-                _database.jobsListDAO().update(this._selectedList);
+            this._database.getQueryExecutor().execute(() -> {
+                this._database.jobDAO().update(this._selectedJob);
+                this._database.jobsListDAO().update(this._selectedList);
             });
         }
     }

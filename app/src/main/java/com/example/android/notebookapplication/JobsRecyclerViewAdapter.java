@@ -13,7 +13,9 @@ import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.example.android.notebookapplication.models.Job;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+
 
 import static android.content.ContentValues.TAG;
 
@@ -37,8 +39,8 @@ public class JobsRecyclerViewAdapter extends RecyclerView.Adapter<JobsRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
-        String edited = formatter.format(this._jobs.get(position).get_edited());
-        String created = formatter.format(this._jobs.get(position).get_created());
+        String edited = formatter.format(this._jobs.get(position).get_edited() != null ? this._jobs.get(position).get_edited() : new Date());
+        String created = formatter.format(this._jobs.get(position).get_created() != null ? this._jobs.get(position).get_created() : new Date());
 
         holder.item = this._jobs.get(position);
         holder.tvTitle.setText(this._jobs.get(position).get_title());

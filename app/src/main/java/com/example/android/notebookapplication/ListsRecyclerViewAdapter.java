@@ -10,16 +10,27 @@ import android.widget.TextView;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
+import com.example.android.notebookapplication.models.ApiUtils;
+import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.security.auth.login.LoginException;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private final List<JobsList> _lists;
     private NotebookDatabase _database;
+    private View _currentView;
 
     public ListsRecyclerViewAdapter(List<JobsList> items) {
         this._lists = items;
@@ -27,13 +38,47 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
+       this._currentView= LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.lists_item, parent, false);
-        this._database = NotebookDatabase.getDatabase(view.getContext());
+        this._database = NotebookDatabase.getDatabase(this._currentView.getContext());
 
-        return new ViewHolder(view);
+        return new ViewHolder(this._currentView);
+    }
+    List<Job> jobs = new ArrayList<>();
+    private void getUsersApiCall(int position) {
+        ApiUtils.getAPIService().getJobs()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new DisposableObserver<Response<List<Job>>>() {
+                    @Override
+                    public void onNext(retrofit2.Response<List<Job>> response) {
+                        Log.i(TAG, "onNext: " + ApiUtils.getResponseStatusCode(response));
+                        if (ApiUtils.getResponseStatusCode(response) == 200) {
+                            LoggedInActivity.viewModel.setSelectedList(position, response.body());
+
+//                            initRecyclerView(response.body());
+                        } //if
+                        else
+                            return;
+                    }
+                    @Override
+                    public void onError(Throwable ex) {
+                        Log.e("API_CALL", ex.getMessage(), ex);
+                        LoggedInActivity.viewModel.setSelectedList(position, null);
+                        showJobsLisDetail();
+                    }
+                    @Override
+                    public void onComplete() {
+                        showJobsLisDetail();
+                    }
+                });
     }
 
+
+    private void showJobsLisDetail(){
+        LoggedInActivity loggedInActivity = (LoggedInActivity) this._currentView.getContext();
+        loggedInActivity.changeContent(AppFragment.JobsListDetail);
+    }
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
@@ -51,10 +96,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
                 if (view.getContext() == null)
                     return;
                 if (view.getContext() instanceof LoggedInActivity) {
-                    LoggedInActivity.viewModel.setSelectedList(position);
+                    getUsersApiCall(position);
+//                    showJobsLisDetail();
+//                    LoggedInActivity.viewModel.setSelectedList(position, null);
 
-                    LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
-                    loggedInActivity.changeContent(AppFragment.JobsListDetail);
+//                    LoggedInActivity loggedInActivity = (LoggedInActivity) view.getContext();
+//                    loggedInActivity.changeContent(AppFragment.JobsListDetail);
                 }
             }
         });

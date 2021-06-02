@@ -20,6 +20,7 @@ import com.example.android.notebookapplication.Enumerators.AppFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class JobDetailFragment extends Fragment {
@@ -172,8 +173,8 @@ public class JobDetailFragment extends Fragment {
 
     private void setValuesToControls() {
         SimpleDateFormat formatter = new SimpleDateFormat(LoggedInActivity.DATE_TIME_FORMAT);
-        String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited());
-        String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created());
+        String edited = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_edited() != null ? LoggedInActivity.viewModel.getSelectedJob().get_edited() : new Date());
+        String created = formatter.format(LoggedInActivity.viewModel.getSelectedJob().get_created() != null ? LoggedInActivity.viewModel.getSelectedJob().get_edited() : new Date());
 
         this._etTitle.setText(LoggedInActivity.viewModel.getSelectedJob().get_title());
         this._etContent.setText(LoggedInActivity.viewModel.getSelectedJob().get_content());
