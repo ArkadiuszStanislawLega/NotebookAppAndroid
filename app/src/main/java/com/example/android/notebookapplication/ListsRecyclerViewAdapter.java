@@ -10,15 +10,13 @@ import android.widget.TextView;
 
 import com.example.android.notebookapplication.Database.NotebookDatabase;
 import com.example.android.notebookapplication.Enumerators.AppFragment;
-import com.example.android.notebookapplication.models.ApiUtils;
+import com.example.android.notebookapplication.Api.ApiUtils;
 import com.example.android.notebookapplication.models.Job;
 import com.example.android.notebookapplication.models.JobsList;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.security.auth.login.LoginException;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableObserver;

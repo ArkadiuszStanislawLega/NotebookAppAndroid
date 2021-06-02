@@ -1,4 +1,6 @@
-package com.example.android.notebookapplication.models;
+package com.example.android.notebookapplication.Api;
+
+import com.example.android.notebookapplication.models.Job;
 
 import java.util.List;
 
